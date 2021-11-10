@@ -7,6 +7,7 @@ import db.QuestionDTO;
 import db.QuestionsDAO;
 
 public class Lobby {
+	
 	private Socket player1;
 	private int points1;
 	private Socket player2;

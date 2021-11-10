@@ -3,14 +3,16 @@ package server.commands;
 import java.net.Socket;
 
 import main.Output;
+import server.DataManager;
 import server.commands.types.ClientCommand;
 
 public class GetCommand implements ClientCommand {
 
-	// Laden aller Spieler, welche momentan auf ein Spiel warten bzw. online sind
+	// Antwort ist eine Liste aller eingeloggten Sockets und deren Status
 	@Override
-	public void performCommand(Socket Connection, String data) throws Exception {
+	public void performCommand(Socket connection, String data) throws Exception {
 		Output.print(this.getClass().getSimpleName());
+		Output.print(DataManager.mapToString());
 	}
 
 }
