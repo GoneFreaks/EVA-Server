@@ -1,0 +1,1 @@
+CREATE TABLE questions (id int primary key, text varchar(100) unique not null, right varchar(50) not null, eva00 varchar(50) not null, eva01 varchar(50) not null, eva02 varchar(50) not null)
