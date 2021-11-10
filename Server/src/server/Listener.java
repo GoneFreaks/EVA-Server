@@ -1,5 +1,7 @@
 package server;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,7 +23,10 @@ public class Listener implements Runnable {
 			while(true) {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(0);
-				cmdMan.performCommand(connection, "delgutentag");
+				
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String line;
+				if((line = reader.readLine()) != null) cmdMan.performCommand(connection, line);
 			}
 		} catch (Exception e) {
 			Output.printException(e);

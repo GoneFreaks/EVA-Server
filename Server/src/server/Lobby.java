@@ -24,25 +24,14 @@ public class Lobby {
 		questions = dao.getRandomQuestion();
 	}
 	
-	public Socket getPlayer1() {
-		return player1;
-	}
-	
-	public void addPoint1() {
-		this.points1++;
-	}
-	
-	public Socket getPlayer2() {
-		return player2;
+	public void addPoints(Socket player) {
+		if(player1.equals(player)) points1++;
+		if(player2.equals(player)) points2++;
 	}
 	
 	public QuestionDTO getQuestion () {
 		if(questions.size() <= 0) return null;
 		else return questions.remove(0);
-	}
-	
-	public void addPoint2() {
-		this.points2++;
 	}
 	
 	public int getWinner () {

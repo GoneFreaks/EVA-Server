@@ -20,8 +20,9 @@ public class Main {
 				listener.start();
 				Output.print("LISTENER WURDE GESTARTET");
 				shutdown();
+				System.out.println("SERVER ONLINE");
 			}
-			else Output.print("VERBINDUNG KONNTE NICHT HERGESTELLT WERDEN");
+			else Output.print("VERBINDUNG ZUR DATENBANK KONNTE NICHT HERGESTELLT WERDEN");
 		} catch (Exception e) {
 			Output.printException(e);
 		}
