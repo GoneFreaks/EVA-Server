@@ -20,6 +20,7 @@ public class DataManager {
 		connected_sockets.forEach((k,v) -> {
 			b.append(v + (lobbys.containsKey(k)? " playing" : " waiting") + "\n");
 		});
+		if(connected_sockets.size() <= 0) b.append("NO PLAYERS AVAILABLE");
 		return b.toString();
 	}
 	

@@ -9,8 +9,9 @@ public class DeleteCommand implements ClientCommand {
 
 	//kontrolliertes Verlassen während einem Spiel oder dem Warten auf ein Spiel
 	@Override
-	public void performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data) throws Exception {
 		Output.print(this.getClass().getSimpleName());
+		return "";
 	}
 
 }

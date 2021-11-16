@@ -1,19 +1,20 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import main.Output;
+import server.util.Identifier;
 
-public class Listener implements Runnable {
+public class ConnectionListener implements Runnable {
 
 	private static final int PORT = 9090;
 	private CommandManager cmdMan;
+	private Identifier identifier;
 	
-	public Listener(CommandManager cmdMan) {
+	public ConnectionListener(CommandManager cmdMan) {
 		this.cmdMan = cmdMan;
+		this.identifier = new Identifier();
 	}
 	
 	@Override
@@ -23,10 +24,10 @@ public class Listener implements Runnable {
 			while(true) {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(0);
-				
-				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				String line;
-				if((line = reader.readLine()) != null) cmdMan.performCommand(connection, line);
+				connection.setKeepAlive(true);
+				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), connection.getOutputStream(), cmdMan, identifier.createIdentifier()));
+				msgListener.setDaemon(true);
+				msgListener.start();
 			}
 		} catch (Exception e) {
 			Output.printException(e);

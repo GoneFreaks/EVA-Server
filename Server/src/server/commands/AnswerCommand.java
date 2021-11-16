@@ -9,8 +9,9 @@ public class AnswerCommand implements ClientCommand {
 
 	// Ein Socket hat eine Antwort geschickt
 	@Override
-	public void performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data) throws Exception {
 		Output.print(this.getClass().getSimpleName());
+		return "";
 	}
 
 }

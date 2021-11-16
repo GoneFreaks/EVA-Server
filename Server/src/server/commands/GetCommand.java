@@ -10,9 +10,9 @@ public class GetCommand implements ClientCommand {
 
 	// Antwort ist eine Liste aller eingeloggten Sockets und deren Status
 	@Override
-	public void performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data) throws Exception {
 		Output.print(this.getClass().getSimpleName());
-		Output.print(DataManager.mapToString());
+		return DataManager.mapToString();
 	}
 
 }

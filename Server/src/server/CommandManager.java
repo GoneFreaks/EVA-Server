@@ -7,7 +7,6 @@ import main.Output;
 import server.commands.AnswerCommand;
 import server.commands.DeleteCommand;
 import server.commands.GetCommand;
-import server.commands.LoginCommand;
 import server.commands.NewCommand;
 import server.commands.types.ClientCommand;
 
@@ -21,20 +20,21 @@ public class CommandManager {
 		this.storage.put("get", new GetCommand());
 		this.storage.put("new", new NewCommand());
 		this.storage.put("ans", new AnswerCommand());
-		this.storage.put("log", new LoginCommand());
 	}
 	
-	public void performCommand(Socket connection, String input) {
+	public String performCommand(Socket connection, String input) {
+		Output.print("EMPFANGEN");
 		String cmd = input.substring(0, 3);
 		String data = input.substring(3);
 		
 		if(storage.get(cmd) != null) {
 			try {
-				storage.get(cmd).performCommand(connection, data);
+				return storage.get(cmd).performCommand(connection, data);
 			} catch (Exception e) {
 				Output.printException(e);
 			}
 		}
 		else Output.print("UNBEKANNTER COMMAND: " + cmd);
+		return "";
 	}
 }

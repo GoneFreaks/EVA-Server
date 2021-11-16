@@ -9,8 +9,9 @@ public class NewCommand implements ClientCommand {
 
 	// erzeuge eine neue Lobby
 	@Override
-	public void performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data) throws Exception {
 		Output.print(this.getClass().getSimpleName());
+		return "";
 	}
 
 }

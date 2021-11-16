@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import db.ConnectionManager;
 import server.CommandManager;
-import server.Listener;
+import server.ConnectionListener;
 
 public class Main {
 	
@@ -14,7 +14,7 @@ public class Main {
 		try {
 			if(ConnectionManager.startUp()) {
 				Output.print("VERBINDUNG ZUR DATENBANK STEHT");
-				Thread listener = new Thread(new Listener(new CommandManager()));
+				Thread listener = new Thread(new ConnectionListener(new CommandManager()));
 				listener.setName("Listener");
 				listener.setDaemon(true);
 				listener.start();
