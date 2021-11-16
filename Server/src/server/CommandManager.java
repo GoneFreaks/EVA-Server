@@ -22,14 +22,13 @@ public class CommandManager {
 		this.storage.put("ans", new AnswerCommand());
 	}
 	
-	public String performCommand(Socket connection, String input) {
-		Output.print("EMPFANGEN");
+	public String performCommand(Socket connection, String input, Thread thread) {
 		String cmd = input.substring(0, 3);
 		String data = input.substring(3);
 		
 		if(storage.get(cmd) != null) {
 			try {
-				return storage.get(cmd).performCommand(connection, data);
+				return storage.get(cmd).performCommand(connection, data, thread);
 			} catch (Exception e) {
 				Output.printException(e);
 			}

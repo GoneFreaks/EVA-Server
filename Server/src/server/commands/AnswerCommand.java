@@ -9,7 +9,7 @@ public class AnswerCommand implements ClientCommand {
 
 	// Ein Socket hat eine Antwort geschickt
 	@Override
-	public String performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data, Thread thread) throws Exception {
 		Output.print(this.getClass().getSimpleName());
 		return "";
 	}

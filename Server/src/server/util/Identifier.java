@@ -28,7 +28,6 @@ public class Identifier {
 				for (int i = 0; i < ID_SIZE; i++) {
 					builder.append(rand.nextInt(9));
 				}
-				builder.append("#");
 				result = builder.toString();
 
 				if(counter++ > 8) return null;

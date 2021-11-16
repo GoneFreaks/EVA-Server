@@ -25,7 +25,9 @@ public class ConnectionListener implements Runnable {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(0);
 				connection.setKeepAlive(true);
-				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), connection.getOutputStream(), cmdMan, identifier.createIdentifier()));
+				String id = identifier.createIdentifier();
+				DataManager.addUser(id);
+				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), connection.getOutputStream(), cmdMan, id));
 				msgListener.setDaemon(true);
 				msgListener.start();
 			}

@@ -9,7 +9,7 @@ public class NewCommand implements ClientCommand {
 
 	// erzeuge eine neue Lobby
 	@Override
-	public String performCommand(Socket connection, String data) throws Exception {
+	public String performCommand(Socket connection, String data, Thread thread) throws Exception {
 		Output.print(this.getClass().getSimpleName());
 		return "";
 	}

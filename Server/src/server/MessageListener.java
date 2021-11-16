@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import main.Output;
-
 public class MessageListener implements Runnable{
 
 	private String identifier;
@@ -26,14 +24,16 @@ public class MessageListener implements Runnable{
 	@Override
 	public void run() {
 		try {
-			String line;
 			out.println(identifier);
-			while((line = in.readLine()) != null) {
-				String response = cmdMan.performCommand(null, line);
-				out.println(response);
+			while(!Thread.currentThread().isInterrupted()) {
+				String line;
+				if(in.ready() && (line = in.readLine()) != null) {
+					String response = cmdMan.performCommand(null, line, Thread.currentThread());
+					out.println(response);
+				}
+				Thread.sleep(100);
 			}
 		} catch (Exception e) {
-			Output.printException(e);
 		}
 	}
 
