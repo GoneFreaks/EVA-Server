@@ -24,6 +24,7 @@ public class MessageListener implements Runnable{
 	@Override
 	public void run() {
 		try {
+			DataManager.addUser(identifier, out);
 			out.println(identifier);
 			while(!Thread.currentThread().isInterrupted()) {
 				String line;

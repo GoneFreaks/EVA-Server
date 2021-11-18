@@ -4,11 +4,13 @@ import server.DataManager;
 import server.MessageManager;
 import server.commands.types.ServerCommand;
 
-public class GetCommand implements ServerCommand {
+public class AcceptCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data, Thread thread) throws Exception {
-		MessageManager.sendMessage("get" + DataManager.getData(identifier), identifier);
+		DataManager.createLobby(identifier, data);
+		MessageManager.sendMessage("acc", identifier);
+		MessageManager.sendMessage("acc", data);
 	}
 
 }

@@ -2,6 +2,7 @@ package server;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import server.commands.AcceptCommand;
 import server.commands.DeleteCommand;
 import server.commands.GetCommand;
 import server.commands.RequestCommand;
@@ -17,6 +18,7 @@ public class CommandManager {
 		this.storage.put("del", new DeleteCommand());
 		this.storage.put("get", new GetCommand());
 		this.storage.put("req", new RequestCommand());
+		this.storage.put("acc", new AcceptCommand());
 	}
 	
 	public String performCommand(String identifier, String input, Thread thread) {
@@ -25,7 +27,8 @@ public class CommandManager {
 		
 		if(storage.get(cmd) != null) {
 			try {
-				return cmd + storage.get(cmd).performCommand(identifier, data, thread);
+				Output.print("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
+				storage.get(cmd).performCommand(identifier, data, thread);
 			} catch (Exception e) {
 				Output.printException(e);
 			}

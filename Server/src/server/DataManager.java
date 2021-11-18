@@ -1,5 +1,6 @@
 package server;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,9 +10,11 @@ import server.util.Output;
 public class DataManager {
 
 	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
 	
-	public static void addUser (String id) {
+	public static void addUser (String id, PrintWriter out) {
 		connected.put(id, new ArrayList<>());
+		MessageManager.addUser(id, out);
 		Output.print("Neuer User: " + id);
 	}
 	
@@ -29,6 +32,12 @@ public class DataManager {
 			}
 		}
 		return b.toString();
+	}
+	
+	public static void createLobby(String player1, String player2) {
+		Lobby lobby = new Lobby(player1, player2);
+		lobbys.put(player1, lobby);
+		lobbys.put(player2, lobby);
 	}
 	
 	public static void addRequest(String send, String receive) {

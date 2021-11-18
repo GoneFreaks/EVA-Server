@@ -1,6 +1,5 @@
 package server;
 
-import java.net.Socket;
 import java.util.List;
 
 import db.QuestionDTO;
@@ -8,15 +7,15 @@ import db.QuestionsDAO;
 
 public class Lobby {
 	
-	private Socket player1;
+	private String player1;
 	private int points1;
-	private Socket player2;
+	private String player2;
 	private int points2;
 	
 	private QuestionsDAO dao;
 	private List<QuestionDTO> questions;
 	
-	public Lobby(Socket player1, Socket player2) {
+	public Lobby(String player1, String player2) {
 		this.player1 = player1;
 		this.points1 = 0;
 		this.player2 = player2;
@@ -25,7 +24,7 @@ public class Lobby {
 		questions = dao.getRandomQuestion();
 	}
 	
-	public void addPoints(Socket player) {
+	public void addPoints(String player) {
 		if(player1.equals(player)) points1++;
 		if(player2.equals(player)) points2++;
 	}
