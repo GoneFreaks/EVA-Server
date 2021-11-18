@@ -28,7 +28,7 @@ public class MessageListener implements Runnable{
 			while(!Thread.currentThread().isInterrupted()) {
 				String line;
 				if(in.ready() && (line = in.readLine()) != null) {
-					String response = cmdMan.performCommand(null, line, Thread.currentThread());
+					String response = cmdMan.performCommand(identifier, line, Thread.currentThread());
 					out.println(response);
 				}
 				Thread.sleep(100);

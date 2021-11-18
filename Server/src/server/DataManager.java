@@ -1,27 +1,38 @@
 package server;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import main.Output;
+import server.util.Output;
 
 public class DataManager {
 
-	private static Set<String> connected_sockets = ConcurrentHashMap.newKeySet();
-	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
 	
 	public static void addUser (String id) {
-		connected_sockets.add(id);
+		connected.put(id, new ArrayList<>());
 		Output.print("Neuer User: " + id);
 	}
 	
-	public static String mapToString() {
+	public static String getData(String identifier) {
+		if(connected.size() <= 0) return "NA";
 		StringBuilder b = new StringBuilder("");
-		connected_sockets.forEach((k) -> {
-			b.append(k + (lobbys.containsKey(k)? " playing" : " waiting") + "\n");
+		connected.forEach((k, v) -> {
+			b.append((b.length() > 0? "," : "") + k);
 		});
-		if(connected_sockets.size() <= 0) b.append("NO PLAYERS AVAILABLE");
+		List<String> list = connected.get(identifier);
+		if(list.size() > 0) {
+			b.append(",,");
+			for (int i = 0; i < list.size(); i++) {
+				b.append((i == 0? "" : ",") + list.get(0));
+			}
+		}
 		return b.toString();
+	}
+	
+	public static void addRequest(String send, String receive) {
+		connected.get(receive).add(send);
 	}
 	
 }

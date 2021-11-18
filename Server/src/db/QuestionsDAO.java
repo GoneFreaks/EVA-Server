@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Output;
+import server.util.Output;
 
 public class QuestionsDAO {
 

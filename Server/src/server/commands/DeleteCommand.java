@@ -1,15 +1,13 @@
 package server.commands;
 
-import java.net.Socket;
+import server.commands.types.ServerCommand;
+import server.util.Output;
 
-import main.Output;
-import server.commands.types.ClientCommand;
-
-public class DeleteCommand implements ClientCommand {
+public class DeleteCommand implements ServerCommand {
 
 	@Override
-	public String performCommand(Socket connection, String data, Thread thread) throws Exception {
-		Output.print(this.getClass().getSimpleName());
+	public String performCommand(String identifier, String data, Thread thread) throws Exception {
+		Output.print("\t" + this.getClass().getSimpleName());
 		thread.interrupt();
 		return "";
 	}

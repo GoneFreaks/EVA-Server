@@ -1,30 +1,31 @@
 package server;
 
-import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-import main.Output;
 import server.commands.DeleteCommand;
 import server.commands.GetCommand;
-import server.commands.types.ClientCommand;
+import server.commands.RequestCommand;
+import server.commands.types.ServerCommand;
+import server.util.Output;
 
 public class CommandManager {
 
-	private ConcurrentHashMap<String, ClientCommand> storage;
+	private ConcurrentHashMap<String, ServerCommand> storage;
 	
 	public CommandManager() {
 		this.storage = new ConcurrentHashMap<>();
 		this.storage.put("del", new DeleteCommand());
 		this.storage.put("get", new GetCommand());
+		this.storage.put("req", new RequestCommand());
 	}
 	
-	public String performCommand(Socket connection, String input, Thread thread) {
+	public String performCommand(String identifier, String input, Thread thread) {
 		String cmd = input.substring(0, 3);
 		String data = input.substring(3);
 		
 		if(storage.get(cmd) != null) {
 			try {
-				return storage.get(cmd).performCommand(connection, data, thread);
+				return cmd + storage.get(cmd).performCommand(identifier, data, thread);
 			} catch (Exception e) {
 				Output.printException(e);
 			}

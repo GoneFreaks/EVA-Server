@@ -3,8 +3,8 @@ package server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import main.Output;
 import server.util.Identifier;
+import server.util.Output;
 
 public class ConnectionListener implements Runnable {
 
