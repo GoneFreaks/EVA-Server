@@ -38,7 +38,6 @@ public class QuestionDTO {
 
 	@Override
 	public String toString() {
-		return "QuestionDTO [question=" + question + ", correct=" + correct + ", eva00=" + eva00 + ", eva01=" + eva01
-				+ ", eva02=" + eva02 + "]";
+		return question + "," + correct + "," + eva00 + "," + eva01 + "," + eva02;
 	}
 }

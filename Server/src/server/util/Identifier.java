@@ -32,6 +32,7 @@ public class Identifier {
 
 				if(counter++ > 8) return null;
 			} while (already.contains(result));
+			already.add(result);
 			return result;
 		}
 	}

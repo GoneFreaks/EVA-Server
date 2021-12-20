@@ -3,6 +3,7 @@ package server;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.util.Output;
@@ -10,6 +11,7 @@ import server.util.Output;
 public class DataManager {
 
 	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
+	private static Set<String> requested = ConcurrentHashMap.newKeySet();
 	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
 	
 	public static void addUser (String id, PrintWriter out) {
@@ -22,7 +24,7 @@ public class DataManager {
 		if(connected.size() <= 0) return "NA";
 		StringBuilder b = new StringBuilder("");
 		connected.forEach((k, v) -> {
-			b.append((b.length() > 0? "," : "") + k);
+			if(!requested.contains(k)) b.append((b.length() > 0? "," : "") + k);
 		});
 		List<String> list = connected.get(identifier);
 		if(list.size() > 0) {
@@ -41,7 +43,12 @@ public class DataManager {
 	}
 	
 	public static void addRequest(String send, String receive) {
+		requested.add(send);
 		connected.get(receive).add(send);
+	}
+	
+	public static Lobby getLobby(String id) {
+		return lobbys.get(id);
 	}
 	
 }

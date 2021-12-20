@@ -3,7 +3,9 @@ package server;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.commands.AcceptCommand;
+import server.commands.AnswerCommand;
 import server.commands.DeleteCommand;
+import server.commands.GameCommand;
 import server.commands.GetCommand;
 import server.commands.RequestCommand;
 import server.commands.types.ServerCommand;
@@ -19,6 +21,8 @@ public class CommandManager {
 		this.storage.put("get", new GetCommand());
 		this.storage.put("req", new RequestCommand());
 		this.storage.put("acc", new AcceptCommand());
+		this.storage.put("gam", new GameCommand());
+		this.storage.put("ans", new AnswerCommand());
 	}
 	
 	public String performCommand(String identifier, String input, Thread thread) {
@@ -27,7 +31,7 @@ public class CommandManager {
 		
 		if(storage.get(cmd) != null) {
 			try {
-				Output.print("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
+				if(!cmd.equals("get")) Output.print("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
 				storage.get(cmd).performCommand(identifier, data, thread);
 			} catch (Exception e) {
 				Output.printException(e);

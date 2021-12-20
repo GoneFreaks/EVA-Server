@@ -1,1 +1,6 @@
-INSERT INTO questions (id,text,right,eva00,eva01,eva02) VALUES (1,"FRAGETEXT", "RICHTIGE ANTWORT", "FALSCHE ANTWORT 1", "FALSCHE ANTWORT2", "FALSCHE ANTWORT3")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Wann sank die Titanic?", "1912", "1910", "1911", "1920")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Welcher Baum hat eine weisse Rind?", "Birke", "Fichte", "Tanne", "Eiche")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Unter der Bezeichnung Abendstern versteht man?", "die Venus", "den Mond", "den Mars", "den Saturn")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Welche Frequenz hat Wechselstrom in Deutschland?", "50Hz", "110Hz", "220Hz", "25Hz")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Wann wurde das Atomium gebaut?", "1958", "1964", "1950", "1970")
+INSERT INTO questions (text,right,eva00,eva01,eva02) VALUES ("Welches Blutvolumen hat ein erwachsener Mensch (65-75 kg Gewicht)?", "etwa 5 - 6 Liter", "etwa 7 - 8 Liter", "etwa 2 - 3 Liter", "etwa 6 - 7 Liter")
