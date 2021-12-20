@@ -1,5 +1,6 @@
 package server.commands;
 
+import db.QuestionDTO;
 import server.DataManager;
 import server.Lobby;
 import server.MessageManager;
@@ -17,7 +18,8 @@ public class AnswerCommand implements ServerCommand {
 		}
 		Lobby lobby = DataManager.getLobby(identifier);
 		lobby.addPoints(identifier, points);
-		MessageManager.sendMessage(lobby.getQuestion().toString(), identifier);
+		QuestionDTO question = lobby.getQuestion(identifier);
+		if(question != null) MessageManager.sendMessage("ans" + question.toString(), identifier);
 	}
 
 }

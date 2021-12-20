@@ -9,7 +9,7 @@ public class GameCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data, Thread thread) throws Exception {
-		QuestionDTO question = DataManager.getLobby(identifier).getQuestion();
+		QuestionDTO question = DataManager.getLobby(identifier).getQuestion(identifier);
 		MessageManager.sendMessage("gam" + question.toString(), identifier);
 	}
 
