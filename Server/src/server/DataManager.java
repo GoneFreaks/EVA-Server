@@ -24,7 +24,7 @@ public class DataManager {
 		if(connected.size() <= 0) return "NA";
 		StringBuilder b = new StringBuilder("");
 		connected.forEach((k, v) -> {
-			if(!requested.contains(k)) b.append((b.length() > 0? "," : "") + k);
+			if(!requested.contains(k) && !lobbys.contains(k)) b.append((b.length() > 0? "," : "") + k);
 		});
 		List<String> list = connected.get(identifier);
 		if(list.size() > 0) {
@@ -49,6 +49,12 @@ public class DataManager {
 	
 	public static Lobby getLobby(String id) {
 		return lobbys.get(id);
+	}
+	
+	public static void reset(String id) {
+		lobbys.remove(id);
+		requested.remove(id);
+		connected.put(id, new ArrayList<>());
 	}
 	
 }

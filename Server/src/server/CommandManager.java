@@ -8,6 +8,7 @@ import server.commands.DeleteCommand;
 import server.commands.GameCommand;
 import server.commands.GetCommand;
 import server.commands.RequestCommand;
+import server.commands.ResetCommand;
 import server.commands.types.ServerCommand;
 import server.util.Output;
 
@@ -23,6 +24,7 @@ public class CommandManager {
 		this.storage.put("acc", new AcceptCommand());
 		this.storage.put("gam", new GameCommand());
 		this.storage.put("ans", new AnswerCommand());
+		this.storage.put("new", new ResetCommand());
 	}
 	
 	public String performCommand(String identifier, String input, Thread thread) {
