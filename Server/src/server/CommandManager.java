@@ -27,7 +27,7 @@ public class CommandManager {
 		this.storage.put("new", new ResetCommand());
 	}
 	
-	public String performCommand(String identifier, String input, Thread thread) {
+	public void performCommand(String identifier, String input, Thread thread) {
 		String cmd = input.substring(0, 3);
 		String data = input.substring(3);
 		
@@ -40,6 +40,5 @@ public class CommandManager {
 			}
 		}
 		else Output.print("UNBEKANNTER COMMAND: " + cmd);
-		return "";
 	}
 }

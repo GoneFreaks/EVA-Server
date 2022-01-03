@@ -23,10 +23,11 @@ public class ConnectionListener implements Runnable {
 		try (ServerSocket sock = new ServerSocket(PORT)) {
 			while(true) {
 				Socket connection = sock.accept();
-				connection.setSoTimeout(0);
+				connection.setSoTimeout(5000);
 				connection.setKeepAlive(true);
 				String id = identifier.createIdentifier();
-				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), connection.getOutputStream(), cmdMan, id));
+				DataManager.addUser(id, connection.getOutputStream());
+				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), cmdMan, id));
 				msgListener.setDaemon(true);
 				msgListener.start();
 			}
