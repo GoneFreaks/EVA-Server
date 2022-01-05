@@ -41,7 +41,7 @@ public class Lobby {
 	
 	private void sendResults() {
 		points.forEach((k,v) -> {
-			MessageManager.sendMessage("res" + getResult(), k);
+			MessageManager.sendMessage("#res" + getResult(), k);
 		});
 	}
 

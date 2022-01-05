@@ -52,7 +52,7 @@ public class DataManager {
 			connected.get(receive).add(send);
 			requester.add(send);
 		}
-		else MessageManager.sendMessage("unl", send);
+		else MessageManager.sendMessage("#unl", send);
 	}
 	
 	public static Lobby getLobby(String id) {
@@ -62,7 +62,7 @@ public class DataManager {
 	public static void clearUserRequests(String identifier, String acceptedUser) {
 		connected.get(identifier).forEach((k) -> {
 			if(!acceptedUser.equals(k)) {
-				MessageManager.sendMessage("unl", k);
+				MessageManager.sendMessage("#unl", k);
 				requester.remove(k);
 			}
 		});
@@ -75,7 +75,7 @@ public class DataManager {
 	
 	public static void delete(String id) {
 		connected.get(id).forEach((k) -> {
-			MessageManager.sendMessage("unl", k);
+			if(connected.containsKey(k)) MessageManager.sendMessage("#unl", k);
 		});
 		lobbys.remove(id);
 		connected.remove(id);

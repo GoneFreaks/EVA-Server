@@ -21,7 +21,7 @@ public class Identifier {
 		int counter = 0;
 		String result;
 		do {
-			StringBuilder builder = new StringBuilder("#");
+			StringBuilder builder = new StringBuilder("@");
 			for (int i = 0; i < ID_SIZE; i++) {
 				builder.append(rand.nextInt(9));
 			}

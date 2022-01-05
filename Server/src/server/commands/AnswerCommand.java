@@ -19,7 +19,7 @@ public class AnswerCommand implements ServerCommand {
 		Lobby lobby = DataManager.getLobby(identifier);
 		lobby.addPoints(identifier, points);
 		QuestionDTO question = lobby.getQuestion(identifier);
-		if(question != null) MessageManager.sendMessage("ans" + question.toString(), identifier);
+		if(question != null) MessageManager.sendMessage("#ans" + question.toString(), identifier);
 	}
 
 }
