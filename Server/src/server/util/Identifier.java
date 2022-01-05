@@ -6,35 +6,35 @@ import java.util.Random;
 
 public class Identifier {
 	
-	public static final int ID_SIZE = 4;
+	public static int ID_SIZE = 3;
 	
 	private List<String> already = new ArrayList<>();
 	
 	private Random rand;
-	private Object object;	// private Lock-Object --> Hijack
 	
 	public Identifier () {
 		rand = new Random();
-		object = new Object();
 	}
 	
-	public String createIdentifier () {
-		synchronized (object) {
+	public synchronized String createIdentifier () {
 			
-			int counter = 0; // if all ids are used --> don't block
-			String result;
-			do {
-				StringBuilder builder = new StringBuilder("#");
-				for (int i = 0; i < ID_SIZE; i++) {
-					builder.append(rand.nextInt(9));
-				}
-				result = builder.toString();
+		int counter = 0;
+		String result;
+		do {
+			StringBuilder builder = new StringBuilder("#");
+			for (int i = 0; i < ID_SIZE; i++) {
+				builder.append(rand.nextInt(9));
+			}
+			result = builder.toString();
 
-				if(counter++ > 8) return null;
-			} while (already.contains(result));
-			already.add(result);
-			return result;
-		}
+			if(counter++ > 8) {	// if it seems like no more ids are available
+				ID_SIZE++;
+				return createIdentifier();
+			}
+		} while (already.contains(result));
+		already.add(result);
+		return result;
+		
 	}
 	
 }

@@ -36,22 +36,23 @@ public class DataManager {
 				b.append((i == 0? "" : ",") + list.get(i));
 			}
 		}
-		
 		return b.toString();
 	}
 	
 	public static void createLobby(String player1, String player2) {
 		Lobby lobby = new Lobby(player1, player2);
 		lobbys.put(player1, lobby);
+		requester.remove(player1);
 		lobbys.put(player2, lobby);
+		requester.remove(player2);
 	}
 	
 	public static void addRequest(String send, String receive) {
-		if(!lobbys.contains(receive) && !requester.contains(receive)) {
+		if(!lobbys.containsKey(receive) && !requester.contains(receive) && connected.containsKey(receive)) {
 			connected.get(receive).add(send);
 			requester.add(send);
 		}
-		else MessageManager.sendMessage("unl", receive);
+		else MessageManager.sendMessage("unl", send);
 	}
 	
 	public static Lobby getLobby(String id) {
@@ -60,7 +61,10 @@ public class DataManager {
 	
 	public static void clearUserRequests(String identifier, String acceptedUser) {
 		connected.get(identifier).forEach((k) -> {
-			if(!acceptedUser.equals(k)) MessageManager.sendMessage("unl", k);
+			if(!acceptedUser.equals(k)) {
+				MessageManager.sendMessage("unl", k);
+				requester.remove(k);
+			}
 		});
 	}
 	
@@ -70,6 +74,9 @@ public class DataManager {
 	}
 	
 	public static void delete(String id) {
+		connected.get(id).forEach((k) -> {
+			MessageManager.sendMessage("unl", k);
+		});
 		lobbys.remove(id);
 		connected.remove(id);
 	}

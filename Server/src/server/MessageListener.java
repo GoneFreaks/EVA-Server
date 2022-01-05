@@ -18,7 +18,7 @@ public class MessageListener implements Runnable{
 	@Override
 	public void run() {
 		try {
-			MessageManager.sendMessage(identifier, identifier);
+			MessageManager.sendMessage("get" + identifier, identifier);
 			while(!Thread.currentThread().isInterrupted()) {
 				if(in.available() > 0) {
 					byte[] arr = new byte[in.available()];

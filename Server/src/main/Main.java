@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -14,6 +15,8 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			if(ConnectionManager.startUp()) {
+				File log_file = new File("log.txt");
+				if(log_file.exists()) log_file.delete();
 				Output.print("VERBINDUNG ZUR DATENBANK STEHT");
 				Thread listener = new Thread(new ConnectionListener(new CommandManager()));
 				listener.setName("Listener");
