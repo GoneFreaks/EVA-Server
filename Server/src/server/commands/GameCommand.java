@@ -2,8 +2,8 @@ package server.commands;
 
 import db.QuestionDTO;
 import server.DataManager;
-import server.MessageManager;
 import server.commands.types.ServerCommand;
+import server.util.MessageManager;
 
 public class GameCommand implements ServerCommand {
 

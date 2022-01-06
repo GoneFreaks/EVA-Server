@@ -3,8 +3,8 @@ package server.commands;
 import db.QuestionDTO;
 import server.DataManager;
 import server.Lobby;
-import server.MessageManager;
 import server.commands.types.ServerCommand;
+import server.util.MessageManager;
 
 public class AnswerCommand implements ServerCommand {
 

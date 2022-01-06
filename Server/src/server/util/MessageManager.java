@@ -1,9 +1,7 @@
-package server;
+package server.util;
 
 import java.io.OutputStream;
 import java.util.concurrent.ConcurrentHashMap;
-
-import server.util.Output;
 
 public class MessageManager {
 

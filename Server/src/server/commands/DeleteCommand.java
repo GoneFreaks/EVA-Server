@@ -2,8 +2,8 @@ package server.commands;
 
 import server.DataManager;
 import server.Listener;
-import server.MessageManager;
 import server.commands.types.ServerCommand;
+import server.util.MessageManager;
 
 public class DeleteCommand implements ServerCommand {
 

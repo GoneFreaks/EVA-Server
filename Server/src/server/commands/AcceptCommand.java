@@ -1,8 +1,8 @@
 package server.commands;
 
 import server.DataManager;
-import server.MessageManager;
 import server.commands.types.ServerCommand;
+import server.util.MessageManager;
 
 public class AcceptCommand implements ServerCommand {
 
