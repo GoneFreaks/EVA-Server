@@ -8,7 +8,7 @@ import server.commands.types.ServerCommand;
 public class GameCommand implements ServerCommand {
 
 	@Override
-	public void performCommand(String identifier, String data, Thread thread) throws Exception {
+	public void performCommand(String identifier, String data) throws Exception {
 		QuestionDTO question = DataManager.getLobby(identifier).getQuestion(identifier);
 		MessageManager.sendMessage("#gam" + question.toString(), identifier);
 	}

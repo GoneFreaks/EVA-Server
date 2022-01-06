@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import db.ConnectionManager;
 import server.CommandManager;
 import server.ConnectionListener;
+import server.Listener;
 import server.util.Output;
 
 public class Main {
@@ -19,11 +20,19 @@ public class Main {
 				File log_file = new File("log.txt");
 				if(log_file.exists()) log_file.delete();
 				Output.print("VERBINDUNG ZUR DATENBANK STEHT");
-				Thread listener = new Thread(new ConnectionListener(new CommandManager()));
-				listener.setName("Listener");
+				
+				new CommandManager();
+				
+				Thread connectionListener = new Thread(new ConnectionListener());
+				connectionListener.setDaemon(true);
+				connectionListener.start();
+				Output.print("CONNECTION-LISTENER WURDE GESTARTET");
+				
+				Thread listener = new Thread(new Listener());
 				listener.setDaemon(true);
 				listener.start();
 				Output.print("LISTENER WURDE GESTARTET");
+				
 				shutdown();
 				System.out.println("SERVER ONLINE");
 			}

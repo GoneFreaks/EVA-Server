@@ -7,7 +7,7 @@ import server.commands.types.ServerCommand;
 public class GetCommand implements ServerCommand {
 
 	@Override
-	public void performCommand(String identifier, String data, Thread thread) throws Exception {
+	public void performCommand(String identifier, String data) throws Exception {
 		MessageManager.sendMessage("#get" + DataManager.getData(identifier), identifier);
 	}
 

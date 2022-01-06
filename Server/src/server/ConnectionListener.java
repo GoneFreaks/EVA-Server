@@ -9,11 +9,9 @@ import server.util.Output;
 public class ConnectionListener implements Runnable {
 
 	private static final int PORT = 9090;
-	private CommandManager cmdMan;
 	private Identifier identifier;
 	
-	public ConnectionListener(CommandManager cmdMan) {
-		this.cmdMan = cmdMan;
+	public ConnectionListener() {
 		this.identifier = new Identifier();
 	}
 	
@@ -27,9 +25,7 @@ public class ConnectionListener implements Runnable {
 				connection.setKeepAlive(true);
 				String id = identifier.createIdentifier();
 				DataManager.addUser(id, connection.getOutputStream());
-				Thread msgListener = new Thread(new MessageListener(connection.getInputStream(), cmdMan, id));
-				msgListener.setDaemon(true);
-				msgListener.start();
+				Listener.INSTANCE.addClient(id, connection.getInputStream());
 			}
 		} catch (Exception e) {
 			Output.printException(e);

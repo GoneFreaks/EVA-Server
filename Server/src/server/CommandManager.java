@@ -14,9 +14,11 @@ import server.util.Output;
 
 public class CommandManager {
 
+	public static CommandManager INSTANCE;
 	private ConcurrentHashMap<String, ServerCommand> storage;
 	
 	public CommandManager() {
+		INSTANCE = this;
 		this.storage = new ConcurrentHashMap<>();
 		this.storage.put("del", new DeleteCommand());
 		this.storage.put("get", new GetCommand());
@@ -27,14 +29,14 @@ public class CommandManager {
 		this.storage.put("new", new ResetCommand());
 	}
 	
-	public void performCommand(String identifier, String input, Thread thread) {
+	public void performCommand(String identifier, String input) {
 		String cmd = input.substring(0, 3);
 		String data = input.substring(3);
 		
 		if(storage.get(cmd) != null) {
 			try {
 				if(!cmd.equals("get")) Output.print("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
-				storage.get(cmd).performCommand(identifier, data, thread);
+				storage.get(cmd).performCommand(identifier, data);
 			} catch (Exception e) {
 				Output.printException(e);
 			}

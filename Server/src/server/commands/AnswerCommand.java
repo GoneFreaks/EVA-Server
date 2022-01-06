@@ -9,7 +9,7 @@ import server.commands.types.ServerCommand;
 public class AnswerCommand implements ServerCommand {
 
 	@Override
-	public void performCommand(String identifier, String data, Thread thread) throws Exception {
+	public void performCommand(String identifier, String data) throws Exception {
 		int points;
 		try {
 			points = Integer.parseInt(data);
