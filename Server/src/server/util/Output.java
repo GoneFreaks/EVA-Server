@@ -4,10 +4,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetAddress;
 
 public class Output {
 
-	private static final boolean DEBUG_OUTPUT = true;
+	private static boolean DEBUG_OUTPUT = false;
+	
+	public static void checkOutput() {
+		try {
+			if(InetAddress.getLocalHost().getHostAddress().startsWith("192.")) DEBUG_OUTPUT = true;
+		} catch (Exception e) {
+		}
+	}
 	
 	/**
 	 * Only print if DEBUG_OUTPUT flag is true

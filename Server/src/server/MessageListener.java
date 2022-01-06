@@ -27,7 +27,10 @@ public class MessageListener implements Runnable{
 					for (int i = 0; i < arr.length; i++) {
 						b.append((char) arr[i]);
 					}
-					cmdMan.performCommand(identifier, b.toString().trim().replace("\n", ""), Thread.currentThread());
+					String[] temp = b.toString().substring(1).split("#");
+					for (int i = 0; i < temp.length; i++) {
+						cmdMan.performCommand(identifier, temp[i].trim(), Thread.currentThread());
+					}
 				}
 				Thread.sleep(50);
 			}

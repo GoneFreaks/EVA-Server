@@ -75,7 +75,10 @@ public class DataManager {
 	
 	public static void delete(String id) {
 		connected.get(id).forEach((k) -> {
-			if(connected.containsKey(k)) MessageManager.sendMessage("#unl", k);
+			if(connected.containsKey(k)) {
+				MessageManager.sendMessage("#unl", k);
+				requester.remove(k);
+			}
 		});
 		lobbys.remove(id);
 		connected.remove(id);

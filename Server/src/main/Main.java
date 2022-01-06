@@ -14,6 +14,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
+			Output.checkOutput();
 			if(ConnectionManager.startUp()) {
 				File log_file = new File("log.txt");
 				if(log_file.exists()) log_file.delete();
