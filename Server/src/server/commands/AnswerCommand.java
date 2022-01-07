@@ -6,6 +6,9 @@ import server.Lobby;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
+/**
+ * If the client has answered a question --> add points, get a new question
+ */
 public class AnswerCommand implements ServerCommand {
 
 	@Override

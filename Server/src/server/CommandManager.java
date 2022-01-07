@@ -12,6 +12,10 @@ import server.commands.ResetCommand;
 import server.commands.types.ServerCommand;
 import server.util.Output;
 
+/**
+ * Every data which is sent to the server will be directed to this manager.</br>
+ * Depending on the first three characters of the input, this manager will execute certain commands
+ */
 public class CommandManager {
 
 	public static CommandManager INSTANCE;

@@ -51,12 +51,13 @@ public class Main {
 				while ((line = reader.readLine()) != null) {
 					if (line.equalsIgnoreCase("exit")) {
 						ConnectionManager.shutdown();
-						break;
+						System.exit(0);
 					} else Output.print("Use 'exit' to shutdown");
 				}
 				
 			} catch (IOException ex) {
 				Output.printException(ex);
+				System.exit(1);
 			} 
 		}).start();
 	}

@@ -4,6 +4,9 @@ import server.DataManager;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
+/**
+ * During waiting for a game --> accepting the request of another client
+ */
 public class AcceptCommand implements ServerCommand {
 
 	@Override

@@ -8,6 +8,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import server.util.MessageManager;
 import server.util.Output;
 
+/**
+ * This manager is responsible for the "state" of each client</br>
+ * Each state is represented by certain collections</br>
+ * For instance if a client requests another client, the client gets a new state called requester
+ */
 public class DataManager {
 
 	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
@@ -16,7 +21,6 @@ public class DataManager {
 	
 	public static void addUser (String id, OutputStream out) {
 		connected.put(id, new ArrayList<>());
-		MessageManager.addUser(id, out);
 		Output.print("Neuer User: " + id);
 	}
 	

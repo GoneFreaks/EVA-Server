@@ -6,6 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import server.util.MessageManager;
 
+/**
+ * This listener stores every user inside a collection</br>
+ * After a short period of time, every InputStream gets checked if somethings has been sent to the server
+ */
 public class Listener implements Runnable{
 
 	private static Map<String, InputStream> storage = new ConcurrentHashMap<>();

@@ -27,8 +27,8 @@ public class Identifier {
 			}
 			result = builder.toString();
 
-			if(counter++ > 8) {	// if it seems like no more ids are available
-				ID_SIZE++;
+			if(counter++ > 8) {	
+				ID_SIZE++;		// if it seems like no more ids are available, increase the length of the id and try to get a new one
 				return createIdentifier();
 			}
 		} while (already.contains(result));

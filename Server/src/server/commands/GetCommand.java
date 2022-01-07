@@ -4,6 +4,9 @@ import server.DataManager;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
+/**
+ * During waiting --> retrieve the current state of each client
+ */
 public class GetCommand implements ServerCommand {
 
 	@Override

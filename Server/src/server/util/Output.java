@@ -6,6 +6,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 
+/**
+ * Every output is redirected into this class</br>
+ * Depending on the current HostAddress debug-outputs will be used</br>
+ * If the flag is false no System.out will be used, meanwhile Exceptions are written into a file
+ */
 public class Output {
 
 	private static boolean DEBUG_OUTPUT = false;
@@ -36,7 +41,6 @@ public class Output {
 				ex.printStackTrace(pw);
 				writer.write(sw.toString());
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

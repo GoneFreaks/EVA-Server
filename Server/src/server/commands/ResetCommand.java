@@ -3,6 +3,9 @@ package server.commands;
 import server.DataManager;
 import server.commands.types.ServerCommand;
 
+/**
+ * After a lobby/game has finished
+ */
 public class ResetCommand implements ServerCommand {
 
 	@Override

@@ -5,6 +5,9 @@ import server.DataManager;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
+/**
+ * After switching from waiting to game --> get the first question
+ */
 public class GameCommand implements ServerCommand {
 
 	@Override

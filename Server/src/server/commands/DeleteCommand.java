@@ -5,6 +5,9 @@ import server.Listener;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
+/**
+ * Remove the client from every collection --> after shutdown of client
+ */
 public class DeleteCommand implements ServerCommand {
 
 	@Override
