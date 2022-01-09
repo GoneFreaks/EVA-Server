@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import db.ConnectionManager;
 import server.CommandManager;
 import server.ConnectionListener;
+import server.IsAliveChecker;
 import server.Listener;
 import server.util.Output;
 
@@ -15,6 +16,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
+			System.out.println(Runtime.getRuntime().availableProcessors());
 			Output.checkOutput();
 			if(ConnectionManager.startUp()) {
 				File log_file = new File("log.txt");
@@ -32,6 +34,11 @@ public class Main {
 				listener.setDaemon(true);
 				listener.start();
 				Output.print("LISTENER WURDE GESTARTET");
+				
+				Thread checker = new Thread(new IsAliveChecker());
+				checker.setDaemon(true);
+				checker.start();
+				Output.print("CHECKER WURDE GESTARTET");
 				
 				shutdown();
 				System.out.println("SERVER ONLINE");

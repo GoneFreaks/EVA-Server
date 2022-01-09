@@ -3,6 +3,7 @@ package server;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.util.MessageManager;
@@ -13,7 +14,7 @@ import server.util.Output;
  * Each state is represented by certain collections</br>
  * For instance if a client requests another client, the client gets a new state called requester
  */
-public class DataManager {
+public class StateManager {
 
 	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
@@ -73,12 +74,20 @@ public class DataManager {
 		});
 	}
 	
+	private static void removeFromLobby(String id) {
+		Lobby lobby;
+		if((lobby = lobbys.remove(id)) != null) {
+			lobby.finishPlayer(id);
+		}
+	}
+	
 	public static void reset(String id) {
 		delete(id);
 		connected.put(id, new ArrayList<>());
 	}
 	
 	public static void delete(String id) {
+		removeFromLobby(id);
 		connected.get(id).forEach((k) -> {
 			if(connected.containsKey(k)) {
 				MessageManager.sendMessage("#unl", k);
@@ -87,6 +96,10 @@ public class DataManager {
 		});
 		lobbys.remove(id);
 		connected.remove(id);
+	}
+	
+	public static Set<String> getClients(){
+		return connected.keySet();
 	}
 	
 }

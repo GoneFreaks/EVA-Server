@@ -35,7 +35,7 @@ public class ConnectionListener implements Runnable {
 				connection.setSoTimeout(5000);
 				connection.setKeepAlive(true);
 				String id = identifier.createIdentifier();
-				DataManager.addUser(id, connection.getOutputStream());
+				StateManager.addUser(id, connection.getOutputStream());
 				MessageManager.addUser(id, connection.getOutputStream());
 				Listener.INSTANCE.addClient(id, connection.getInputStream());
 			}

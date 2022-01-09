@@ -60,4 +60,8 @@ public class Lobby {
 		});
 		return b.toString();
 	}
+	
+	public void finishPlayer(String id) {
+		pointer.put(id, questions.size());
+	}
 }

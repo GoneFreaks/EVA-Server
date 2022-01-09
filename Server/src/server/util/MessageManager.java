@@ -3,6 +3,8 @@ package server.util;
 import java.io.OutputStream;
 import java.util.concurrent.ConcurrentHashMap;
 
+import server.CommandManager;
+
 public class MessageManager {
 
 	private static ConcurrentHashMap<String, OutputStream> writer = new ConcurrentHashMap<>();
@@ -24,6 +26,7 @@ public class MessageManager {
 			
 		} catch (Exception e) {
 			Output.printException(e);
+			CommandManager.INSTANCE.performCommand(id, "del");
 		}
 	}
 	

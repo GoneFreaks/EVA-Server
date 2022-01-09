@@ -1,7 +1,7 @@
 package server.commands;
 
-import server.DataManager;
 import server.Listener;
+import server.StateManager;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
@@ -12,7 +12,7 @@ public class DeleteCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data) throws Exception {
-		DataManager.delete(identifier);
+		StateManager.delete(identifier);
 		MessageManager.removeId(identifier);
 		Listener.INSTANCE.removeClient(identifier);
 	}
