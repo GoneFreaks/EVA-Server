@@ -20,11 +20,6 @@ import server.util.Output;
 public class ConnectionListener implements Runnable {
 
 	private static final int PORT = 9090;
-	private Identifier identifier;
-	
-	public ConnectionListener() {
-		this.identifier = new Identifier();
-	}
 	
 	@Override
 	public void run() {
@@ -34,10 +29,10 @@ public class ConnectionListener implements Runnable {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(5000);
 				connection.setKeepAlive(true);
-				String id = identifier.createIdentifier();
+				String id = Identifier.INSTANCE.createIdentifier();
 				StateManager.addUser(id, connection.getOutputStream());
 				MessageManager.addUser(id, connection.getOutputStream());
-				Listener.INSTANCE.addClient(id, connection.getInputStream());
+				MessageListener.INSTANCE.addClient(id, connection.getInputStream());
 			}
 		} catch (Exception e) {
 			Output.printException(e);

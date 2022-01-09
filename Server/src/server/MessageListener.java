@@ -10,12 +10,12 @@ import server.util.MessageManager;
  * This listener stores every user inside a collection</br>
  * After a short period of time, every InputStream gets checked if somethings has been sent to the server
  */
-public class Listener implements Runnable{
+public class MessageListener implements Runnable{
 
 	private static Map<String, InputStream> storage = new ConcurrentHashMap<>();
-	public static Listener INSTANCE;
+	public static MessageListener INSTANCE;
 	
-	public Listener() {
+	public MessageListener() {
 		INSTANCE = this;
 	}
 	

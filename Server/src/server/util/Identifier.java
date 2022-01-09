@@ -6,13 +6,15 @@ import java.util.Random;
 
 public class Identifier {
 	
-	public static int ID_SIZE = 3;
+	private static int ID_SIZE = 3;
+	public static Identifier INSTANCE;
 	
 	private List<String> already = new ArrayList<>();
 	
 	private Random rand;
 	
 	public Identifier () {
+		INSTANCE = this;
 		rand = new Random();
 	}
 	
@@ -35,6 +37,10 @@ public class Identifier {
 		already.add(result);
 		return result;
 		
+	}
+	
+	public synchronized void removeIdentifier(String id) {
+		already.remove(id);
 	}
 	
 }

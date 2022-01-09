@@ -9,14 +9,14 @@ import db.ConnectionManager;
 import server.CommandManager;
 import server.ConnectionListener;
 import server.IsAliveChecker;
-import server.Listener;
+import server.MessageListener;
+import server.util.Identifier;
 import server.util.Output;
 
 public class Main {
 	
 	public static void main(String[] args) {
 		try {
-			System.out.println(Runtime.getRuntime().availableProcessors());
 			Output.checkOutput();
 			if(ConnectionManager.startUp()) {
 				File log_file = new File("log.txt");
@@ -24,13 +24,14 @@ public class Main {
 				Output.print("VERBINDUNG ZUR DATENBANK STEHT");
 				
 				new CommandManager();
+				new Identifier();
 				
 				Thread connectionListener = new Thread(new ConnectionListener());
 				connectionListener.setDaemon(true);
 				connectionListener.start();
 				Output.print("CONNECTION-LISTENER WURDE GESTARTET");
 				
-				Thread listener = new Thread(new Listener());
+				Thread listener = new Thread(new MessageListener());
 				listener.setDaemon(true);
 				listener.start();
 				Output.print("LISTENER WURDE GESTARTET");
