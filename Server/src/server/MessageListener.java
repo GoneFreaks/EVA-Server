@@ -1,50 +1,29 @@
 package server;
 
 import java.io.InputStream;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import server.util.MessageManager;
+public class MessageListener implements Runnable {
 
-/**
- * This listener stores every user inside a collection</br>
- * After a short period of time, every InputStream gets checked if somethings has been sent to the server
- */
-public class MessageListener implements Runnable{
-
-	private static Map<String, InputStream> storage = new ConcurrentHashMap<>();
-	public static MessageListener INSTANCE;
+	private int id;
 	
-	public MessageListener() {
-		INSTANCE = this;
+	public MessageListener(int id) {
+		this.id = id;
 	}
 	
-	public synchronized void addClient(String identifier, InputStream in) {
-		storage.put(identifier, in);
-		MessageManager.sendMessage("#get" + identifier, identifier);
-	}
-	
-	public synchronized void removeClient(String identifier) {
-		storage.remove(identifier);
-	}
-
 	@Override
 	public void run() {
 		while(true) {
-			synchronized (this){
-				storage.forEach((k,v) -> {
-					String[] read = readInputStream(storage.get(k));
-					if(read != null) {
-						for(int i = 0; i < read.length; i++) {
-							CommandManager.INSTANCE.performCommand(k, read[i]);
-						}
+			MessageListenerManager.INSTANCE.getCertainMap(id).forEach((k,v) -> {
+				String[] read = readInputStream(v);
+				if(read != null) {
+					for(int i = 0; i < read.length; i++) {
+						CommandManager.INSTANCE.performCommand(k, read[i]);
 					}
-				});
-			}
+				}
+			});
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -65,5 +44,5 @@ public class MessageListener implements Runnable{
 			return null;
 		}
 	}
-	
+
 }

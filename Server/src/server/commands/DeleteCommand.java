@@ -1,6 +1,6 @@
 package server.commands;
 
-import server.MessageListener;
+import server.MessageListenerManager;
 import server.StateManager;
 import server.commands.types.ServerCommand;
 import server.util.Identifier;
@@ -15,7 +15,7 @@ public class DeleteCommand implements ServerCommand {
 	public void performCommand(String identifier, String data) throws Exception {
 		StateManager.delete(identifier);
 		MessageManager.removeId(identifier);
-		MessageListener.INSTANCE.removeClient(identifier);
+		MessageListenerManager.INSTANCE.removeClient(identifier);
 		Identifier.INSTANCE.removeIdentifier(identifier);
 	}
 

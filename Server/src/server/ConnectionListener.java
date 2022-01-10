@@ -32,7 +32,7 @@ public class ConnectionListener implements Runnable {
 				String id = Identifier.INSTANCE.createIdentifier();
 				StateManager.addUser(id, connection.getOutputStream());
 				MessageManager.addUser(id, connection.getOutputStream());
-				MessageListener.INSTANCE.addClient(id, connection.getInputStream());
+				MessageListenerManager.INSTANCE.addClient(id, connection.getInputStream());
 			}
 		} catch (Exception e) {
 			Output.printException(e);

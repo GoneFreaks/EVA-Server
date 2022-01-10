@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import db.ConnectionManager;
 import server.CommandManager;
 import server.ConnectionListener;
-import server.MessageListener;
+import server.MessageListenerManager;
 import server.StateManager;
 import server.util.Identifier;
 import server.util.MessageManager;
@@ -32,9 +32,7 @@ public class Main {
 				connectionListener.start();
 				Output.print("CONNECTION-LISTENER WURDE GESTARTET");
 				
-				Thread listener = new Thread(new MessageListener());
-				listener.setDaemon(true);
-				listener.start();
+				new MessageListenerManager().start();
 				Output.print("LISTENER WURDE GESTARTET");
 				
 				Thread checker = new Thread(new Runnable() {
