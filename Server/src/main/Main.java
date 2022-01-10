@@ -8,9 +8,10 @@ import java.io.InputStreamReader;
 import db.ConnectionManager;
 import server.CommandManager;
 import server.ConnectionListener;
-import server.IsAliveChecker;
 import server.MessageListener;
+import server.StateManager;
 import server.util.Identifier;
+import server.util.MessageManager;
 import server.util.Output;
 
 public class Main {
@@ -36,7 +37,20 @@ public class Main {
 				listener.start();
 				Output.print("LISTENER WURDE GESTARTET");
 				
-				Thread checker = new Thread(new IsAliveChecker());
+				Thread checker = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(true) {
+							try {
+								StateManager.getClients().forEach((k) -> {
+									MessageManager.sendMessage("#not", k);
+								});
+								Thread.sleep(10000);
+							} catch (Exception e) {
+							}
+						}
+					}
+				});
 				checker.setDaemon(true);
 				checker.start();
 				Output.print("CHECKER WURDE GESTARTET");
