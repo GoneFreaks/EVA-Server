@@ -10,7 +10,7 @@ public class DeleteCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data) throws Exception {
-		StateManager.delete(identifier);
+		StateManager.delete(identifier, true);
 		MessageManager.INSTANCE.removeId(identifier);
 		MessageListenerManager.INSTANCE.removeClient(identifier);
 		Identifier.INSTANCE.removeIdentifier(identifier);

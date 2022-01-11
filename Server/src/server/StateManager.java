@@ -85,11 +85,11 @@ public class StateManager {
 	}
 	
 	public static void reset(String id) {
-		delete(id);
+		delete(id, false);
 		connected.put(id, new ArrayList<>());
 	}
 	
-	public static void delete(String id) {
+	public static void delete(String id, boolean delete) {
 		removeFromLobby(id);
 		connected.get(id).forEach((k) -> {
 			if(connected.containsKey(k)) {
@@ -99,9 +99,11 @@ public class StateManager {
 		});
 		lobbys.remove(id);
 		connected.remove(id);
-		try {
-			socket_map.remove(id).close();
-		} catch (Exception e) {
+		if(delete) {
+			try {
+				socket_map.remove(id).close();
+			} catch (Exception e) {
+			}
 		}
 	}
 	
