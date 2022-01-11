@@ -1,27 +1,28 @@
 package server;
 
-import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.util.MessageManager;
+import server.util.Output;
 
 /**
- * This listener stores every user inside a collection</br>
- * After a short period of time, every InputStream gets checked if somethings has been sent to the server
+ * Depending on the number of available processors, this manager will use n Threads to read from all clients
  */
 public class MessageListenerManager{
 
 	public static MessageListenerManager INSTANCE;
 	
-	private static Map <Integer, Map<String, InputStream>> storage = new ConcurrentHashMap<>();
+	private static Map <Integer, List<String>> storage = new ConcurrentHashMap<>();
 	private static int thread_count;
 	
 	public MessageListenerManager() {
 		INSTANCE = this;
-		thread_count = (int) Math.max(1, Runtime.getRuntime().availableProcessors()/2);
+		thread_count = Runtime.getRuntime().availableProcessors();
 		for (int i = 0; i < thread_count; i++) {
-			storage.put(i, new ConcurrentHashMap<>());
+			storage.put(i, new LinkedList<>());
 		}
 	}
 	
@@ -34,7 +35,7 @@ public class MessageListenerManager{
 		}
 	}
 
-	public synchronized void addClient(String identifier, InputStream in) {
+	public synchronized void addClient(String identifier) {
 		int min = Integer.MAX_VALUE;
 		int index = 0;
 		for (int i = 0; i < storage.size(); i++) {
@@ -43,8 +44,14 @@ public class MessageListenerManager{
 				min = storage.get(i).size();
 			}
 		}
-		storage.get(index).put(identifier, in);
-		MessageManager.sendMessage("#get" + identifier, identifier);
+		storage.get(index).add(identifier);
+		MessageManager.INSTANCE.sendMessage("#get" + identifier, identifier);
+		
+		// Only debugging
+		storage.forEach((k,v) -> {
+			Output.print(v.size() + " ");
+		});
+		Output.println("");
 	}
 	
 	public synchronized void removeClient(String identifier) {
@@ -53,7 +60,7 @@ public class MessageListenerManager{
 		});
 	}
 	
-	public synchronized Map<String, InputStream> getCertainMap(int id) {
+	public synchronized List<String> getCertainList(int id) {
 		return storage.get(id);
 	}
 	

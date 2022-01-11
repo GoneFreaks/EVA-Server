@@ -12,10 +12,6 @@ import server.commands.ResetCommand;
 import server.commands.types.ServerCommand;
 import server.util.Output;
 
-/**
- * Every data which is sent to the server will be directed to this manager.</br>
- * Depending on the first three characters of the input, this manager will execute certain commands
- */
 public class CommandManager {
 
 	public static CommandManager INSTANCE;
@@ -39,12 +35,12 @@ public class CommandManager {
 		
 		if(storage.get(cmd) != null) {
 			try {
-				if(!cmd.equals("get")) Output.print("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
+				if(!cmd.equals("get")) Output.println("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
 				storage.get(cmd).performCommand(identifier, data);
 			} catch (Exception e) {
 				Output.printException(e);
 			}
 		}
-		else Output.print("UNBEKANNTER COMMAND: " + cmd);
+		else Output.println("UNBEKANNTER COMMAND: " + cmd);
 	}
 }

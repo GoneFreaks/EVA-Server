@@ -11,13 +11,16 @@ public class Lobby {
 	
 	private ConcurrentHashMap<String, Integer> points;
 	private ConcurrentHashMap<String, Integer> pointer;
-	
-	private QuestionsDAO dao;
+
 	private List<QuestionDTO> questions;
+	private Thread db_access;
 	
 	public Lobby(String player1, String player2) {
-		this.dao = new QuestionsDAO();
-		questions = dao.getRandomQuestion();
+		
+		db_access = new Thread(() -> { QuestionsDAO.getRandomQuestion(this);});
+		db_access.setDaemon(true);
+		db_access.start();
+		
 		points = new ConcurrentHashMap<>();
 		points.put(player1, 0);
 		points.put(player2, 0);
@@ -26,11 +29,21 @@ public class Lobby {
 		pointer.put(player2, -1);
 	}
 	
+	public void setQuestions(List<QuestionDTO> questions) {
+		this.questions = questions;
+	}
+	
 	public void addPoints(String player, int addition) {
 		points.put(player, points.get(player) + addition);
 	}
 	
 	public QuestionDTO getQuestion (String identifier) {
+		if(db_access != null)
+			try {
+				db_access.join();
+				db_access = null;
+			} catch (Exception ex) {
+			}
 		try {
 			pointer.put(identifier, pointer.get(identifier) + 1);
 			return questions.get(pointer.get(identifier));
@@ -42,7 +55,7 @@ public class Lobby {
 	
 	private void sendResults() {
 		points.forEach((k,v) -> {
-			MessageManager.sendMessage("#res" + getResult(), k);
+			MessageManager.INSTANCE.sendMessage("#res" + getResult(), k);
 		});
 	}
 

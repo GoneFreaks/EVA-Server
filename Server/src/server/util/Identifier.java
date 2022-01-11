@@ -9,7 +9,7 @@ public class Identifier {
 	private static int ID_SIZE = 3;
 	public static Identifier INSTANCE;
 	
-	private List<String> already = new ArrayList<>();
+	private List<String> identifier_list = new ArrayList<>();
 	
 	private Random rand;
 	
@@ -33,14 +33,14 @@ public class Identifier {
 				ID_SIZE++;		// if it seems like no more ids are available, increase the length of the id and try to get a new one
 				return createIdentifier();
 			}
-		} while (already.contains(result));
-		already.add(result);
+		} while (identifier_list.contains(result));
+		identifier_list.add(result);
 		return result;
 		
 	}
 	
 	public synchronized void removeIdentifier(String id) {
-		already.remove(id);
+		identifier_list.remove(id);
 	}
 	
 }

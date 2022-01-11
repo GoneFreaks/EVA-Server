@@ -6,9 +6,6 @@ import server.Lobby;
 import server.commands.types.ServerCommand;
 import server.util.MessageManager;
 
-/**
- * If the client has answered a question --> add points, get a new question
- */
 public class AnswerCommand implements ServerCommand {
 
 	@Override
@@ -22,7 +19,7 @@ public class AnswerCommand implements ServerCommand {
 		Lobby lobby = StateManager.getLobby(identifier);
 		lobby.addPoints(identifier, points);
 		QuestionDTO question = lobby.getQuestion(identifier);
-		if(question != null) MessageManager.sendMessage("#ans" + question.toString(), identifier);
+		if(question != null) MessageManager.INSTANCE.sendMessage("#ans" + question.toString(), identifier);
 	}
 
 }

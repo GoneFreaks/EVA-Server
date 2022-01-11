@@ -6,11 +6,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 
-/**
- * Every output is redirected into this class</br>
- * Depending on the current HostAddress debug-outputs will be used</br>
- * If the flag is false no System.out will be used, meanwhile Exceptions are written into a file
- */
 public class Output {
 
 	private static boolean DEBUG_OUTPUT = false;
@@ -22,16 +17,14 @@ public class Output {
 		}
 	}
 	
-	/**
-	 * Only print if DEBUG_OUTPUT flag is true
-	 */
-	public static void print (String out) {
+	public static void println (String out) {
 		if(DEBUG_OUTPUT) System.out.println(out);
 	}
 	
-	/**
-	 * Only print if DEBUG_OUTPUT flag is true
-	 */
+	public static void print (String out) {
+		if(DEBUG_OUTPUT) System.out.print(out);
+	}
+	
 	public static void printException (Exception ex) {
 		if(DEBUG_OUTPUT) ex.printStackTrace();
 		else {

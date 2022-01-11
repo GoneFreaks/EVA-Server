@@ -20,28 +20,34 @@ public class Main {
 		try {
 			Output.checkOutput();
 			if(ConnectionManager.startUp()) {
+				
 				File log_file = new File("log.txt");
 				if(log_file.exists()) log_file.delete();
-				Output.print("VERBINDUNG ZUR DATENBANK STEHT");
+				
+				Output.println("VERBINDUNG ZUR DATENBANK STEHT");
 				
 				new CommandManager();
 				new Identifier();
+				new MessageManager();
 				
+				// Wait for new connection-request
 				Thread connectionListener = new Thread(new ConnectionListener());
 				connectionListener.setDaemon(true);
 				connectionListener.start();
-				Output.print("CONNECTION-LISTENER WURDE GESTARTET");
+				Output.println("CONNECTION-LISTENER WURDE GESTARTET");
 				
+				// Read new messages from clients
 				new MessageListenerManager().start();
-				Output.print("LISTENER WURDE GESTARTET");
+				Output.println("LISTENER WURDE GESTARTET");
 				
+				// Check if client is still available --> if available nothing happens else remove client from collections
 				Thread checker = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						while(true) {
 							try {
 								StateManager.getClients().forEach((k) -> {
-									MessageManager.sendMessage("#not", k);
+									MessageManager.INSTANCE.sendMessage("#not", k);
 								});
 								Thread.sleep(10000);
 							} catch (Exception e) {
@@ -51,12 +57,23 @@ public class Main {
 				});
 				checker.setDaemon(true);
 				checker.start();
-				Output.print("CHECKER WURDE GESTARTET");
+				Output.println("CHECKER WURDE GESTARTET");
 				
 				shutdown();
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					@Override
+					public void run() {
+						try {
+							ConnectionManager.shutdown();
+							StateManager.closeAll();
+							ConnectionListener.sock.close();
+						} catch (Exception e) {
+						}
+					}
+				});
 				System.out.println("SERVER ONLINE");
 			}
-			else Output.print("VERBINDUNG ZUR DATENBANK KONNTE NICHT HERGESTELLT WERDEN");
+			else Output.println("VERBINDUNG ZUR DATENBANK KONNTE NICHT HERGESTELLT WERDEN");
 		} catch (Exception e) {
 			Output.printException(e);
 		}
@@ -70,9 +87,8 @@ public class Main {
 				
 				while ((line = reader.readLine()) != null) {
 					if (line.equalsIgnoreCase("exit")) {
-						ConnectionManager.shutdown();
 						System.exit(0);
-					} else Output.print("Use 'exit' to shutdown");
+					} else Output.println("Use 'exit' to shutdown");
 				}
 				
 			} catch (IOException ex) {
@@ -81,5 +97,4 @@ public class Main {
 			} 
 		}).start();
 	}
-
 }

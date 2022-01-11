@@ -6,14 +6,6 @@ import java.sql.DriverManager;
 
 import server.util.Output;
 
-/**
- * This manager has following functions:
- * <ul>
- * <li>Creating a connection to the database</li>
- * <li>Closing the connection with the database</li>
- * <li>Provide the connection for DB-Access</li>
- * <ul>
- */
 public class ConnectionManager {
 	
 	private static Connection connection;
@@ -26,7 +18,7 @@ public class ConnectionManager {
 		try {
 			if(connection != null) {
 				connection.close();
-				Output.print("VERBINDUNG GESCHLOSSEN");
+				Output.println("VERBINDUNG GESCHLOSSEN");
 			}
 		} catch (Exception e) {
 			Output.printException(e);

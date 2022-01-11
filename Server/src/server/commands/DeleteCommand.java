@@ -6,15 +6,12 @@ import server.commands.types.ServerCommand;
 import server.util.Identifier;
 import server.util.MessageManager;
 
-/**
- * Remove the client from every collection --> after shutdown of client
- */
 public class DeleteCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data) throws Exception {
 		StateManager.delete(identifier);
-		MessageManager.removeId(identifier);
+		MessageManager.INSTANCE.removeId(identifier);
 		MessageListenerManager.INSTANCE.removeClient(identifier);
 		Identifier.INSTANCE.removeIdentifier(identifier);
 	}
