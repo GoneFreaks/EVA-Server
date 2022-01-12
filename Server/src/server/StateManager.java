@@ -91,12 +91,14 @@ public class StateManager {
 	
 	public static void delete(String id, boolean delete) {
 		removeFromLobby(id);
-		connected.get(id).forEach((k) -> {
-			if(connected.containsKey(k)) {
-				MessageManager.INSTANCE.sendMessage("#unl", k);
-				requester.remove(k);
-			}
-		});
+		if(connected.get(id) != null) {
+			connected.get(id).forEach((k) -> {
+				if(connected.containsKey(k)) {
+					MessageManager.INSTANCE.sendMessage("#unl", k);
+					requester.remove(k);
+				}
+			});
+		}
 		lobbys.remove(id);
 		connected.remove(id);
 		if(delete) {

@@ -31,9 +31,10 @@ public class MessageManager {
 		byte[] output = message.getBytes();
 		try {
 			OutputStream out = writer.get(id);
-			out.write(output);
-			out.flush();
-			
+			if(out != null) {
+				out.write(output);
+				out.flush();
+			}
 		} catch (Exception e) {
 			Output.printException(e);
 			CommandManager.INSTANCE.performCommand(id, "del");
@@ -43,7 +44,7 @@ public class MessageManager {
 	public synchronized String[] readMessage(String id) {
 		try {
 			InputStream in = reader.get(id);
-			if(in.available() > 0) {
+			if(in != null && in.available() > 0) {
 				byte[] arr = new byte[in.available()];
 				in.read(arr, 0, in.available());
 				StringBuilder b = new StringBuilder("");

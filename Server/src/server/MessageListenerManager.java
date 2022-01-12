@@ -1,12 +1,8 @@
 package server;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import server.util.MessageManager;
-import server.util.Output;
+import server.util.ClientMap;
 
 /**
  * Depending on the number of available processors, this manager will use n Threads to read from all clients
@@ -14,20 +10,18 @@ import server.util.Output;
 public class MessageListenerManager{
 
 	public static MessageListenerManager INSTANCE;
-	
-	private static Map <Integer, List<String>> storage = new ConcurrentHashMap<>();
-	private static int thread_count;
+	private int size;
+	private ClientMap map;
 	
 	public MessageListenerManager() {
 		INSTANCE = this;
-		thread_count = Runtime.getRuntime().availableProcessors();
-		for (int i = 0; i < thread_count; i++) {
-			storage.put(i, new LinkedList<>());
-		}
+		this.size = Runtime.getRuntime().availableProcessors();
+		this.size = 2;
+		this.map = new ClientMap(size);
 	}
 	
 	public void start() {
-		for (int i = 0; i < thread_count; i++) {
+		for (int i = 0; i < size; i++) {
 			Thread temp = new Thread(new MessageListener(i));
 			temp.setDaemon(true);
 			temp.setName("MessageListener-" + i);
@@ -35,33 +29,16 @@ public class MessageListenerManager{
 		}
 	}
 
-	public synchronized void addClient(String identifier) {
-		int min = Integer.MAX_VALUE;
-		int index = 0;
-		for (int i = 0; i < storage.size(); i++) {
-			if(storage.get(i).size() < min) {
-				index = i;
-				min = storage.get(i).size();
-			}
-		}
-		storage.get(index).add(identifier);
-		MessageManager.INSTANCE.sendMessage("#get" + identifier, identifier);
-		
-		// Only debugging
-		storage.forEach((k,v) -> {
-			Output.print(v.size() + " ");
-		});
-		Output.println("");
+	public void addClient(String identifier) {
+		map.addClient(identifier);
 	}
 	
-	public synchronized void removeClient(String identifier) {
-		storage.forEach((k,v) -> {
-			v.remove(identifier);
-		});
+	public void removeClient(String identifier) {
+		map.removeClient(identifier);
 	}
 	
-	public synchronized List<String> getCertainList(int id) {
-		return storage.get(id);
+	public List<String> getList(int id) {
+		return map.getList(id);
 	}
 	
 }

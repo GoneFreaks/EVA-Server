@@ -13,7 +13,7 @@ public class MessageListener implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			MessageListenerManager.INSTANCE.getCertainList(id).forEach((k) -> {
+			MessageListenerManager.INSTANCE.getList(id).forEach((k) -> {
 				String[] read = MessageManager.INSTANCE.readMessage(k);
 				if(read != null) {
 					for(int i = 0; i < read.length; i++) {

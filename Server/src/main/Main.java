@@ -16,6 +16,9 @@ import server.util.Output;
 
 public class Main {
 	
+	public static final int PORT = 9090;
+	public static final int RANDOM_COUNT = 2;
+	
 	public static void main(String[] args) {
 		try {
 			Output.checkOutput();

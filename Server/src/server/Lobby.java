@@ -76,5 +76,8 @@ public class Lobby {
 	
 	public void finishPlayer(String id) {
 		pointer.put(id, questions.size());
+		pointer.forEach((k,v) -> {
+			if(!k.equals(id) && v == questions.size()) MessageManager.INSTANCE.sendMessage("#res" + getResult(), k);
+		});
 	}
 }

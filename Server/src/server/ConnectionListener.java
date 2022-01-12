@@ -3,18 +3,17 @@ package server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import main.Main;
 import server.util.Identifier;
 import server.util.MessageManager;
 
 public class ConnectionListener implements Runnable {
-
-	private static final int PORT = 9090;
 	public static ServerSocket sock;
 	
 	@Override
 	public void run() {
 		try {
-			sock = new ServerSocket(PORT);
+			sock = new ServerSocket(Main.PORT);
 			while(true) {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(5000);
