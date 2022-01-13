@@ -56,9 +56,9 @@ public class ClientMap {
 	
 	private void printDebugOutput() {
 		storage.forEach((k,v) -> {
-			Output.print(v.size() + " ");
+			System.out.print(v.size() + " ");
 		});
-		Output.println("");
+		System.out.println();
 	}
 	
 }

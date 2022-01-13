@@ -16,7 +16,6 @@ public class MessageListenerManager{
 	public MessageListenerManager() {
 		INSTANCE = this;
 		this.size = Runtime.getRuntime().availableProcessors();
-		this.size = 2;
 		this.map = new ClientMap(size);
 	}
 	

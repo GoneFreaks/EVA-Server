@@ -4,8 +4,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import server.util.Output;
-
 public class ConnectionManager {
 	
 	private static Connection connection;
@@ -18,10 +16,10 @@ public class ConnectionManager {
 		try {
 			if(connection != null) {
 				connection.close();
-				Output.println("VERBINDUNG GESCHLOSSEN");
+				System.out.println("VERBINDUNG GESCHLOSSEN");
 			}
 		} catch (Exception e) {
-			Output.printException(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -36,7 +34,7 @@ public class ConnectionManager {
 			return true;
 			
 		} catch (Exception e) {
-			Output.printException(e);
+			e.printStackTrace();
 			return false;
 		}	
 	}

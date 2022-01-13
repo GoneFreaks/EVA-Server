@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.util.MessageManager;
-import server.util.Output;
 
 public class StateManager {
 
@@ -25,7 +24,7 @@ public class StateManager {
 	public static void addUser (String id, Socket client) {
 		connected.put(id, new ArrayList<>());
 		socket_map.put(id, client);
-		Output.println("Neuer User: " + id);
+		System.out.println("Neuer User: " + id);
 	}
 	
 	public static String getData(String identifier) {

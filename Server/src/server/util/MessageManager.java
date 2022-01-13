@@ -36,7 +36,7 @@ public class MessageManager {
 				out.flush();
 			}
 		} catch (Exception e) {
-			Output.printException(e);
+			e.printStackTrace();
 			CommandManager.INSTANCE.performCommand(id, "del");
 		}
 	}

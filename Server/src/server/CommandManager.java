@@ -10,7 +10,6 @@ import server.commands.GetCommand;
 import server.commands.RequestCommand;
 import server.commands.ResetCommand;
 import server.commands.types.ServerCommand;
-import server.util.Output;
 
 public class CommandManager {
 
@@ -35,12 +34,12 @@ public class CommandManager {
 		
 		if(storage.get(cmd) != null) {
 			try {
-				if(!cmd.equals("get")) Output.println("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
+				if(!cmd.equals("get")) System.out.println("\t" + identifier + ": " + storage.get(cmd).getClass().getSimpleName());
 				storage.get(cmd).performCommand(identifier, data);
 			} catch (Exception e) {
-				Output.printException(e);
+				e.printStackTrace();
 			}
 		}
-		else Output.println("UNBEKANNTER COMMAND: " + cmd);
+		else System.out.println("UNBEKANNTER COMMAND: " + cmd);
 	}
 }

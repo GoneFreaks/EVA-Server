@@ -7,7 +7,6 @@ import java.util.List;
 
 import main.Main;
 import server.Lobby;
-import server.util.Output;
 
 public class QuestionsDAO {
 	
@@ -23,7 +22,7 @@ public class QuestionsDAO {
 					));
 			lobby.setQuestions(result);
 		} catch (Exception e) {
-			Output.printException(e);
+			e.printStackTrace();
 		}
 	}
 	
