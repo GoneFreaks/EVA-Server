@@ -4,21 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Identifier {
+public class IdManager {
 	
 	private static int ID_SIZE = 3;
-	public static Identifier INSTANCE;
+	private static List<String> identifier_list = new ArrayList<>();
+	private static Random rand = new Random();
 	
-	private List<String> identifier_list = new ArrayList<>();
-	
-	private Random rand;
-	
-	public Identifier () {
-		INSTANCE = this;
-		rand = new Random();
-	}
-	
-	public synchronized String createIdentifier () {
+	public static synchronized String createIdentifier () {
 			
 		int counter = 0;
 		String result;
@@ -39,7 +31,7 @@ public class Identifier {
 		
 	}
 	
-	public synchronized void removeIdentifier(String id) {
+	public static synchronized void removeIdentifier(String id) {
 		identifier_list.remove(id);
 	}
 	

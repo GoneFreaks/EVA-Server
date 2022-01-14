@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import server.util.Lobby;
 import server.util.MessageManager;
 
 public class StateManager {
@@ -60,7 +61,7 @@ public class StateManager {
 			connected.get(receive).add(send);
 			requester.add(send);
 		}
-		else MessageManager.INSTANCE.sendMessage("#unl", send);
+		else MessageManager.sendMessage("#unl", send);
 	}
 	
 	public static Lobby getLobby(String id) {
@@ -70,7 +71,7 @@ public class StateManager {
 	public static void clearUserRequests(String identifier, String acceptedUser) {
 		connected.get(identifier).forEach((k) -> {
 			if(!acceptedUser.equals(k)) {
-				MessageManager.INSTANCE.sendMessage("#unl", k);
+				MessageManager.sendMessage("#unl", k);
 				requester.remove(k);
 			}
 		});
@@ -93,7 +94,7 @@ public class StateManager {
 		if(connected.get(id) != null) {
 			connected.get(id).forEach((k) -> {
 				if(connected.containsKey(k)) {
-					MessageManager.INSTANCE.sendMessage("#unl", k);
+					MessageManager.sendMessage("#unl", k);
 					requester.remove(k);
 				}
 			});
@@ -115,7 +116,7 @@ public class StateManager {
 	public static void closeAll() {
 		socket_map.forEach((k,v) -> {
 			try {
-				MessageListenerManager.INSTANCE.removeClient(k);
+				MessageListenerManager.removeClient(k);
 				v.close();
 			} catch (Exception e) {
 			}

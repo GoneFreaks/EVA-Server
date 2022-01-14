@@ -1,11 +1,10 @@
-package server;
+package server.util;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import db.QuestionDTO;
 import db.QuestionsDAO;
-import server.util.MessageManager;
 
 public class Lobby {
 	
@@ -55,7 +54,7 @@ public class Lobby {
 	
 	private void sendResults() {
 		points.forEach((k,v) -> {
-			MessageManager.INSTANCE.sendMessage("#res" + getResult(), k);
+			MessageManager.sendMessage("#res" + getResult(), k);
 		});
 	}
 
@@ -77,7 +76,7 @@ public class Lobby {
 	public void finishPlayer(String id) {
 		pointer.put(id, questions.size());
 		pointer.forEach((k,v) -> {
-			if(!k.equals(id) && v == questions.size()) MessageManager.INSTANCE.sendMessage("#res" + getResult(), k);
+			if(!k.equals(id) && v == questions.size()) MessageManager.sendMessage("#res" + getResult(), k);
 		});
 	}
 }

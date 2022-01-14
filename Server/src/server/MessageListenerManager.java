@@ -1,25 +1,27 @@
 package server;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import server.util.ClientMap;
+import server.listener.MessageListener;
+import server.util.MessageManager;
 
 /**
  * Depending on the number of available processors, this manager will use n Threads to read from all clients
  */
 public class MessageListenerManager{
 
-	public static MessageListenerManager INSTANCE;
-	private int size;
-	private ClientMap map;
+	private static int size;
+	private static Map<Integer, List<String>> storage = new ConcurrentHashMap<>();
 	
-	public MessageListenerManager() {
-		INSTANCE = this;
-		this.size = Runtime.getRuntime().availableProcessors();
-		this.map = new ClientMap(size);
-	}
-	
-	public void start() {
+	public static void start() {
+		size = Runtime.getRuntime().availableProcessors();
+		for (int i = 0; i < size; i++) {
+			storage.put(i, new LinkedList<>());
+		}
+		
 		for (int i = 0; i < size; i++) {
 			Thread temp = new Thread(new MessageListener(i));
 			temp.setDaemon(true);
@@ -28,16 +30,50 @@ public class MessageListenerManager{
 		}
 	}
 
-	public void addClient(String identifier) {
-		map.addClient(identifier);
+	public static void addClient(String identifier) {
+		int min = Integer.MAX_VALUE;
+		int index = 0;
+		for (int i = 0; i < storage.size(); i++) {
+			if(storage.get(i).size() < min) {
+				index = i;
+				min = storage.get(i).size();
+			}
+		}
+		storage.get(index).add(identifier);
+		MessageManager.sendMessage("#get" + identifier, identifier);
+		printDebugOutput();
 	}
 	
-	public void removeClient(String identifier) {
-		map.removeClient(identifier);
+	public static void removeClient(String identifier) {
+		storage.forEach((k,v) -> {
+			if(v.remove(identifier)) rebalanceLists(k);
+		});
+		printDebugOutput();
 	}
 	
-	public List<String> getList(int id) {
-		return map.getList(id);
+	public static List<String> getList(int id) {
+		return storage.get(id);
+	}
+	
+	private static void rebalanceLists(int id) {
+		int max = Integer.MIN_VALUE;
+		int max_index = 0;
+		for (int i = 0; i < storage.size(); i++) {
+			if(storage.get(i).size() > max) {
+				max_index = i;
+				max = storage.get(i).size();
+			}
+		}
+		if(storage.get(id).size() + 2 <= storage.get(max_index).size()) {
+			storage.get(id).add(storage.get(max_index).remove(0));
+		}
+	}
+	
+	private static void printDebugOutput() {
+		storage.forEach((k,v) -> {
+			System.out.print(v.size() + " ");
+		});
+		System.out.println();
 	}
 	
 }

@@ -13,11 +13,9 @@ import server.commands.types.ServerCommand;
 
 public class CommandManager {
 
-	public static CommandManager INSTANCE;
 	private ConcurrentHashMap<String, ServerCommand> storage;
 	
 	public CommandManager() {
-		INSTANCE = this;
 		this.storage = new ConcurrentHashMap<>();
 		this.storage.put("del", new DeleteCommand());
 		this.storage.put("get", new GetCommand());

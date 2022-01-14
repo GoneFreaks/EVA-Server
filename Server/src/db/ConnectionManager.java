@@ -8,7 +8,7 @@ public class ConnectionManager {
 	
 	private static Connection connection;
 	
-	public static synchronized Connection getConnection() {
+	public static Connection getConnection() {
 		return connection;
 	}
 	

@@ -1,5 +1,7 @@
-package server;
+package server.listener;
 
+import main.Main;
+import server.MessageListenerManager;
 import server.util.MessageManager;
 
 public class MessageListener implements Runnable {
@@ -13,11 +15,11 @@ public class MessageListener implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			MessageListenerManager.INSTANCE.getList(id).forEach((k) -> {
-				String[] read = MessageManager.INSTANCE.readMessage(k);
+			MessageListenerManager.getList(id).forEach((k) -> {
+				String[] read = MessageManager.readMessage(k);
 				if(read != null) {
 					for(int i = 0; i < read.length; i++) {
-						CommandManager.INSTANCE.performCommand(k, read[i]);
+						Main.INSTANCE.cmdMan.performCommand(k, read[i]);
 					}
 				}
 			});

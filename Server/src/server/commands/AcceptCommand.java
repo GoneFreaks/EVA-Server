@@ -10,8 +10,8 @@ public class AcceptCommand implements ServerCommand {
 	public void performCommand(String identifier, String data) throws Exception {
 		StateManager.createLobby(identifier, data);
 		StateManager.clearUserRequests(identifier, data);
-		MessageManager.INSTANCE.sendMessage("#acc", identifier);
-		MessageManager.INSTANCE.sendMessage("#acc", data);
+		MessageManager.sendMessage("#acc", identifier);
+		MessageManager.sendMessage("#acc", data);
 	}
 
 }

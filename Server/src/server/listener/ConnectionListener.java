@@ -1,13 +1,16 @@
-package server;
+package server.listener;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import main.Main;
-import server.util.Identifier;
+import server.MessageListenerManager;
+import server.StateManager;
+import server.util.IdManager;
 import server.util.MessageManager;
 
 public class ConnectionListener implements Runnable {
+	
 	public static ServerSocket sock;
 	
 	@Override
@@ -18,10 +21,10 @@ public class ConnectionListener implements Runnable {
 				Socket connection = sock.accept();
 				connection.setSoTimeout(5000);
 				connection.setKeepAlive(true);
-				String id = Identifier.INSTANCE.createIdentifier();
+				String id = IdManager.createIdentifier();
 				StateManager.addUser(id, connection);
-				MessageManager.INSTANCE.addUser(id, connection.getOutputStream(), connection.getInputStream());
-				MessageListenerManager.INSTANCE.addClient(id);
+				MessageManager.addUser(id, connection.getOutputStream(), connection.getInputStream());
+				MessageListenerManager.addClient(id);
 			}
 		} catch (Exception e) {
 		}

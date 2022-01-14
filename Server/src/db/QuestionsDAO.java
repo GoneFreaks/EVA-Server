@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Main;
-import server.Lobby;
+import server.util.Lobby;
 
 public class QuestionsDAO {
 	

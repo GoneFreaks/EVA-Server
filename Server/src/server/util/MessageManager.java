@@ -4,30 +4,24 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.ConcurrentHashMap;
 
-import server.CommandManager;
+import main.Main;
 
 public class MessageManager {
 
 	private static ConcurrentHashMap<String, OutputStream> writer = new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, InputStream> reader = new ConcurrentHashMap<>();
 	
-	public static MessageManager INSTANCE;
-	
-	public MessageManager() {
-		INSTANCE = this;
-	}
-	
-	public synchronized void removeId(String id) {
+	public static void removeId(String id) {
 		writer.remove(id);
 		reader.remove(id);
 	}
 	
-	public synchronized void addUser(String id, OutputStream out, InputStream in) {
+	public static void addUser(String id, OutputStream out, InputStream in) {
 		writer.put(id, out);
 		reader.put(id, in);
 	}
 	
-	public synchronized void sendMessage(String message, String id) {
+	public static void sendMessage(String message, String id) {
 		byte[] output = message.getBytes();
 		try {
 			OutputStream out = writer.get(id);
@@ -37,11 +31,11 @@ public class MessageManager {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			CommandManager.INSTANCE.performCommand(id, "del");
+			Main.INSTANCE.cmdMan.performCommand(id, "del");
 		}
 	}
 	
-	public synchronized String[] readMessage(String id) {
+	public static String[] readMessage(String id) {
 		try {
 			InputStream in = reader.get(id);
 			if(in != null && in.available() > 0) {
