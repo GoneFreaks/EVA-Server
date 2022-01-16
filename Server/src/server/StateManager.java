@@ -39,12 +39,16 @@ public class StateManager {
 			if(!requester.contains(k) && !lobbys.containsKey(k) && !identifier.equals(k) && !list.contains(k)) b.append((b.length() > 0? "," : "") + k);
 		});
 		
+		if(b.length() < 1) b.append("-");
+		b.append(",,");
+		
 		if(list.size() > 0) {
-			b.append(",,");
 			for (int i = 0; i < list.size(); i++) {
 				b.append((i == 0? "" : ",") + list.get(i));
 			}
 		}
+		else b.append("-");
+		
 		return b.toString();
 	}
 	
@@ -101,6 +105,9 @@ public class StateManager {
 		}
 		lobbys.remove(id);
 		connected.remove(id);
+		connected.forEach((k,v) -> {
+			v.remove(id);
+		});
 		if(delete) {
 			try {
 				socket_map.remove(id).close();
