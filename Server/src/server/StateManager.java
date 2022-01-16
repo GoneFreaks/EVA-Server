@@ -52,12 +52,16 @@ public class StateManager {
 		return b.toString();
 	}
 	
-	public static void createLobby(String player1, String player2) {
-		Lobby lobby = new Lobby(player1, player2);
-		lobbys.put(player1, lobby);
-		requester.remove(player1);
-		lobbys.put(player2, lobby);
-		requester.remove(player2);
+	public static boolean createLobby(String player1, String player2) {
+		if(connected.containsKey(player1) && connected.containsKey(player2)) {
+			Lobby lobby = new Lobby(player1, player2);
+			lobbys.put(player1, lobby);
+			requester.remove(player1);
+			lobbys.put(player2, lobby);
+			requester.remove(player2);
+			return true;
+		}
+		else return false;
 	}
 	
 	public static void addRequest(String send, String receive) {

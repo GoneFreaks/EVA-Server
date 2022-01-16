@@ -8,10 +8,15 @@ public class AcceptCommand implements ServerCommand {
 
 	@Override
 	public void performCommand(String identifier, String data) throws Exception {
-		StateManager.createLobby(identifier, data);
-		StateManager.clearUserRequests(identifier, data);
-		MessageManager.sendMessage("#acc", identifier);
-		MessageManager.sendMessage("#acc", data);
+		if(StateManager.createLobby(identifier, data)) {
+			StateManager.clearUserRequests(identifier, data);
+			MessageManager.sendMessage("#acc", identifier);
+			MessageManager.sendMessage("#acc", data);
+		}
+		else {
+			MessageManager.sendMessage("#unl", identifier);
+			MessageManager.sendMessage("#unl", data);
+		}
 	}
 
 }
