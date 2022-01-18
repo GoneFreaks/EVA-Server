@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Main;
-import server.util.Lobby;
 
 public class QuestionsDAO {
 	
-	public static void getRandomQuestion (Lobby lobby) {
+	public static List<QuestionDTO> getRandomQuestion () {
 		List<QuestionDTO> result = new ArrayList<>();
 		try(Statement stmt = ConnectionManager.getConnection().createStatement(); ResultSet rs = stmt.executeQuery("SELECT text, right, eva00, eva01, eva02 FROM questions ORDER BY RANDOM() LIMIT " + Main.RANDOM_COUNT)) {
 			while(rs.next()) result.add(new QuestionDTO(
@@ -20,9 +19,10 @@ public class QuestionsDAO {
 					rs.getString("eva01"),
 					rs.getString("eva02")
 					));
-			lobby.setQuestions(result);
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 	

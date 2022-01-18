@@ -12,14 +12,10 @@ public class Lobby {
 	private ConcurrentHashMap<String, Integer> pointer;
 
 	private List<QuestionDTO> questions;
-	private Thread db_access;
 	
 	public Lobby(String player1, String player2) {
 		
-		db_access = new Thread(() -> { QuestionsDAO.getRandomQuestion(this);});
-		db_access.setDaemon(true);
-		db_access.start();
-		
+		questions = QuestionsDAO.getRandomQuestion();
 		points = new ConcurrentHashMap<>();
 		points.put(player1, 0);
 		points.put(player2, 0);
@@ -37,12 +33,6 @@ public class Lobby {
 	}
 	
 	public QuestionDTO getQuestion (String identifier) {
-		if(db_access != null)
-			try {
-				db_access.join();
-				db_access = null;
-			} catch (Exception ex) {
-			}
 		try {
 			pointer.put(identifier, pointer.get(identifier) + 1);
 			return questions.get(pointer.get(identifier));
