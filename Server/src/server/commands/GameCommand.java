@@ -1,15 +1,15 @@
 package server.commands;
 
 import db.QuestionDTO;
-import server.DataManager;
-import server.MessageManager;
+import server.StateManager;
 import server.commands.types.ServerCommand;
+import server.util.MessageManager;
 
 public class GameCommand implements ServerCommand {
 
 	@Override
-	public void performCommand(String identifier, String data, Thread thread) throws Exception {
-		QuestionDTO question = DataManager.getLobby(identifier).getQuestion(identifier);
+	public void performCommand(String identifier, String data) throws Exception {
+		QuestionDTO question = StateManager.getLobby(identifier).getQuestion(identifier);
 		MessageManager.sendMessage("#gam" + question.toString(), identifier);
 	}
 

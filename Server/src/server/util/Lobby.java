@@ -1,4 +1,4 @@
-package server;
+package server.util;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,19 +10,22 @@ public class Lobby {
 	
 	private ConcurrentHashMap<String, Integer> points;
 	private ConcurrentHashMap<String, Integer> pointer;
-	
-	private QuestionsDAO dao;
+
 	private List<QuestionDTO> questions;
 	
 	public Lobby(String player1, String player2) {
-		this.dao = new QuestionsDAO();
-		questions = dao.getRandomQuestion();
+		
+		questions = QuestionsDAO.getRandomQuestion();
 		points = new ConcurrentHashMap<>();
 		points.put(player1, 0);
 		points.put(player2, 0);
 		pointer = new ConcurrentHashMap<>();
 		pointer.put(player1, -1);
 		pointer.put(player2, -1);
+	}
+	
+	public void setQuestions(List<QuestionDTO> questions) {
+		this.questions = questions;
 	}
 	
 	public void addPoints(String player, int addition) {
@@ -58,5 +61,12 @@ public class Lobby {
 			b.append(k + "," + v + (b.length() > 0? "":",,"));
 		});
 		return b.toString();
+	}
+	
+	public void finishPlayer(String id) {
+		pointer.put(id, questions.size());
+		pointer.forEach((k,v) -> {
+			if(!k.equals(id) && v == questions.size()) MessageManager.sendMessage("#res" + getResult(), k);
+		});
 	}
 }

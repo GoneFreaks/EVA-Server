@@ -1,24 +1,17 @@
 package db;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.util.Output;
+import main.Main;
 
 public class QuestionsDAO {
-
-	Connection cn;
 	
-	public QuestionsDAO () {
-		this.cn = ConnectionManager.getConnection();
-	}
-	
-	public List<QuestionDTO> getRandomQuestion () {
+	public static List<QuestionDTO> getRandomQuestion () {
 		List<QuestionDTO> result = new ArrayList<>();
-		try(Statement stmt = cn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT text, right, eva00, eva01, eva02 FROM questions ORDER BY RANDOM() LIMIT 5")) {
+		try(Statement stmt = ConnectionManager.getConnection().createStatement(); ResultSet rs = stmt.executeQuery("SELECT text, right, eva00, eva01, eva02 FROM questions ORDER BY RANDOM() LIMIT " + Main.RANDOM_COUNT)) {
 			while(rs.next()) result.add(new QuestionDTO(
 					rs.getString("text"),
 					rs.getString("right"),
@@ -28,9 +21,9 @@ public class QuestionsDAO {
 					));
 			return result;
 		} catch (Exception e) {
-			Output.printException(e);
+			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
 }
