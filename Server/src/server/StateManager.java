@@ -14,17 +14,14 @@ public class StateManager {
 	// Every client and his list of invitations
 	private static ConcurrentHashMap<String, List<String>> connected = new ConcurrentHashMap<>();
 	
-	// Every client currently playing and his lobby
+	// Every client currently playing and the corresponding lobby
 	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
 	
 	// Ever client who has sent a request to another client
 	private static List<String> requester = new ArrayList<>();
 	
-	private static ConcurrentHashMap<String, Socket> socket_map = new ConcurrentHashMap<>();
-	
 	public static void addUser (String id, Socket client) {
 		connected.put(id, new ArrayList<>());
-		socket_map.put(id, client);
 		System.out.println("Neuer User: " + id);
 	}
 	
@@ -93,11 +90,11 @@ public class StateManager {
 	}
 	
 	public static void reset(String id) {
-		delete(id, false);
+		delete(id);
 		connected.put(id, new ArrayList<>());
 	}
 	
-	public static void delete(String id, boolean delete) {
+	public static void delete(String id) {
 		removeFromLobby(id);
 		if(connected.get(id) != null) {
 			connected.get(id).forEach((k) -> {
@@ -112,26 +109,10 @@ public class StateManager {
 		connected.forEach((k,v) -> {
 			v.remove(id);
 		});
-		if(delete) {
-			try {
-				socket_map.remove(id).close();
-			} catch (Exception e) {
-			}
-		}
 	}
 	
 	public static Set<String> getClients(){
 		return connected.keySet();
-	}
-	
-	public static void closeAll() {
-		socket_map.forEach((k,v) -> {
-			try {
-				MessageListenerManager.removeClient(k);
-				v.close();
-			} catch (Exception e) {
-			}
-		});
 	}
 	
 }

@@ -78,7 +78,6 @@ public class Main {
 			public void run() {
 				try {
 					ConnectionManager.shutdown();
-					StateManager.closeAll();
 					ConnectionListener.sock.close();
 				} catch (Exception e) {
 				}
