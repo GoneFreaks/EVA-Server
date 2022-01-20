@@ -22,7 +22,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			System.out.println("SERVER");
-			Filter.filter();
+			Filter.filterOutputStreams();
 			if(ConnectionManager.startUp()) {
 				INSTANCE = new Main();
 				INSTANCE.startup();

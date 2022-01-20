@@ -6,7 +6,7 @@ import java.net.InetAddress;
 
 public class Filter {
 
-	public static void filter() throws Exception {
+	public static void filterOutputStreams() throws Exception {
 		if(!InetAddress.getLocalHost().getHostAddress().startsWith("192.")) {
 				File log_file = new File("log.txt");
 				if(log_file.exists()) log_file.delete();
