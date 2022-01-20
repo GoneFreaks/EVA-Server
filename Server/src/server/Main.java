@@ -84,6 +84,7 @@ public class Main {
 				
 				while ((line = reader.readLine()) != null) {
 					if (line.equalsIgnoreCase("exit")) {
+						System.out.println("Used Thread-Count: " + Thread.activeCount());
 						System.exit(0);
 					} else System.out.println("Use 'exit' to shutdown");
 				}
