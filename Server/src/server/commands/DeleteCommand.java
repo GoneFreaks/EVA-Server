@@ -11,7 +11,7 @@ public class DeleteCommand implements ServerCommand {
 	@Override
 	public void performCommand(String identifier, String data) throws Exception {
 		StateManager.delete(identifier);
-		MessageManager.removeId(identifier);
+		MessageManager.removeUser(identifier);
 		MessageListenerManager.removeClient(identifier);
 		IdManager.removeIdentifier(identifier);
 	}

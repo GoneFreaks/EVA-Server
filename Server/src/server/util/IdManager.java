@@ -21,7 +21,7 @@ public class IdManager {
 			}
 			result = builder.toString();
 
-			if(counter++ > 8) {	
+			if(counter++ > 4) {	
 				ID_SIZE++;		// if it seems like no more ids are available, increase the length of the id and try to get a new one
 				return createIdentifier();
 			}

@@ -32,6 +32,9 @@ public class ConnectionListener {
 				
 			}
 			
+			//one threads always waits on port
+			//meanwhile others may execute code below or wait
+			
 			connection.setSoTimeout(5000);
 			connection.setKeepAlive(true);
 			String id = IdManager.createIdentifier();

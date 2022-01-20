@@ -4,13 +4,15 @@ import java.net.ServerSocket;
 
 import server.Main;
 
+/**
+ * Depending on the number of available processors, this manager will use n/2 Threads to wait for connection-requests
+ */
 public class ConnectionListenerManager {
 
 	private static ServerSocket server;
 	
 	public static void start() {
 		try {
-			
 			server = new ServerSocket(Main.PORT);
 			ConnectionListener listener = new ConnectionListener(server);
 			Runnable task = () -> {while(true) listener.awaitRequest();};

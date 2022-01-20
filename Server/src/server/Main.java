@@ -1,7 +1,6 @@
 package server;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -34,9 +33,6 @@ public class Main {
 	}
 	
 	private void startup() {
-		File log_file = new File("log.txt");
-		if(log_file.exists()) log_file.delete();
-		
 		System.out.println("VERBINDUNG ZUR DATENBANK STEHT");
 		
 		cmdMan = new CommandManager();
@@ -50,17 +46,14 @@ public class Main {
 		System.out.println("LISTENER WURDE GESTARTET");
 		
 		// Check if client is still available --> if available nothing happens else remove client from collections
-		Thread checker = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while(true) {
-					try {
-						StateManager.getClients().forEach((k) -> {
-							MessageManager.sendMessage("#not", k);
-						});
-						Thread.sleep(10000);
-					} catch (Exception e) {
-					}
+		Thread checker = new Thread(() -> {
+			while(true) {
+				try {
+					StateManager.getClients().forEach((k) -> {
+						MessageManager.sendMessage("#not", k);
+					});
+					Thread.sleep(10000);
+				} catch (Exception e) {
 				}
 			}
 		});
@@ -82,6 +75,7 @@ public class Main {
 		System.out.println("SERVER ONLINE");
 	}
 	
+	// Shutdown server by typing exit
 	private static void shutdown() {
 		new Thread(() -> {
 

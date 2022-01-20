@@ -54,6 +54,8 @@ public class MessageListenerManager{
 		return storage.get(id);
 	}
 	
+	//ensure that nothing like this happens: 0 8 0 1 2 0 3 6
+	// number of clients per thread
 	private static void rebalanceLists(int id) {
 		int max = Integer.MIN_VALUE;
 		int max_index = 0;

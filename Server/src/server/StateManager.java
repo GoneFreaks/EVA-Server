@@ -62,6 +62,7 @@ public class StateManager {
 	}
 	
 	public static void addRequest(String send, String receive) {
+		// Receiver is not playing, has not requested another client and is connected to the server
 		if(!lobbys.containsKey(receive) && !requester.contains(receive) && connected.containsKey(receive)) {
 			connected.get(receive).add(send);
 			requester.add(send);
@@ -84,9 +85,7 @@ public class StateManager {
 	
 	private static void removeFromLobby(String id) {
 		Lobby lobby;
-		if((lobby = lobbys.remove(id)) != null) {
-			lobby.finishPlayer(id);
-		}
+		if((lobby = lobbys.remove(id)) != null) lobby.finishPlayer(id);
 	}
 	
 	public static void reset(String id) {

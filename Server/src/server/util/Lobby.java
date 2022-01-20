@@ -9,12 +9,13 @@ import server.db.QuestionsDA;
 public class Lobby {
 	
 	private ConcurrentHashMap<String, Integer> points;
+	
+	//The current question index for each player
 	private ConcurrentHashMap<String, Integer> pointer;
 
 	private List<QuestionDTO> questions;
 	
 	public Lobby(String player1, String player2) {
-		
 		questions = QuestionsDA.getRandomQuestion();
 		points = new ConcurrentHashMap<>();
 		points.put(player1, 0);

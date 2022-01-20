@@ -11,7 +11,7 @@ public class MessageManager {
 	private static ConcurrentHashMap<String, OutputStream> writer = new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, InputStream> reader = new ConcurrentHashMap<>();
 	
-	public static void removeId(String id) {
+	public static void removeUser(String id) {
 		writer.remove(id);
 		reader.remove(id);
 	}
