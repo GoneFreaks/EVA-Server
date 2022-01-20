@@ -7,7 +7,7 @@ import java.util.List;
 
 import server.Main;
 
-public class QuestionsDAO {
+public class QuestionsDA {
 	
 	public static List<QuestionDTO> getRandomQuestion () {
 		List<QuestionDTO> result = new ArrayList<>();

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import server.db.QuestionDTO;
-import server.db.QuestionsDAO;
+import server.db.QuestionsDA;
 
 public class Lobby {
 	
@@ -15,7 +15,7 @@ public class Lobby {
 	
 	public Lobby(String player1, String player2) {
 		
-		questions = QuestionsDAO.getRandomQuestion();
+		questions = QuestionsDA.getRandomQuestion();
 		points = new ConcurrentHashMap<>();
 		points.put(player1, 0);
 		points.put(player2, 0);
