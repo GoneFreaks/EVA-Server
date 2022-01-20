@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.ConcurrentHashMap;
 
-import main.Main;
+import server.Main;
 
 public class MessageManager {
 

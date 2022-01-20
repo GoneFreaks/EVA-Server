@@ -1,7 +1,6 @@
 package server.listener;
 
-import main.Main;
-import server.MessageListenerManager;
+import server.Main;
 import server.util.MessageManager;
 
 public class MessageListener implements Runnable {

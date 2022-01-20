@@ -1,11 +1,10 @@
-package server;
+package server.listener;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import server.listener.MessageListener;
 import server.util.MessageManager;
 
 /**

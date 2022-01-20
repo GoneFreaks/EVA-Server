@@ -1,8 +1,8 @@
 package server.commands;
 
-import server.MessageListenerManager;
 import server.StateManager;
 import server.commands.types.ServerCommand;
+import server.listener.MessageListenerManager;
 import server.util.IdManager;
 import server.util.MessageManager;
 

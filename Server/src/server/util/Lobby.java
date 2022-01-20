@@ -3,8 +3,8 @@ package server.util;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import db.QuestionDTO;
-import db.QuestionsDAO;
+import server.db.QuestionDTO;
+import server.db.QuestionsDAO;
 
 public class Lobby {
 	

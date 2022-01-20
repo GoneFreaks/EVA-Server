@@ -1,15 +1,13 @@
-package main;
+package server;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import db.ConnectionManager;
-import server.CommandManager;
-import server.MessageListenerManager;
-import server.StateManager;
-import server.listener.ConnectionListener;
+import server.db.ConnectionManager;
+import server.listener.ConnectionListenerManager;
+import server.listener.MessageListenerManager;
 import server.util.Filter;
 import server.util.MessageManager;
 
@@ -44,9 +42,7 @@ public class Main {
 		cmdMan = new CommandManager();
 		
 		// Wait for new connection-request
-		Thread connectionListener = new Thread(new ConnectionListener());
-		connectionListener.setDaemon(true);
-		connectionListener.start();
+		ConnectionListenerManager.start();
 		System.out.println("CONNECTION-LISTENER WURDE GESTARTET");
 		
 		// Read new messages from clients
@@ -78,7 +74,7 @@ public class Main {
 			public void run() {
 				try {
 					ConnectionManager.shutdown();
-					ConnectionListener.sock.close();
+					ConnectionListenerManager.shutdown();
 				} catch (Exception e) {
 				}
 			}
