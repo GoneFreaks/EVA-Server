@@ -2,11 +2,11 @@ package server.db;
 
 public class QuestionDTO {
 
-	private String question;
-	private String correct;
-	private String eva00;
-	private String eva01;
-	private String eva02;
+	private final String question;
+	private final String correct;
+	private final String eva00;
+	private final String eva01;
+	private final String eva02;
 	
 	public QuestionDTO (String question, String correct, String eva00, String eva01, String eva02) {
 		this.question = question;

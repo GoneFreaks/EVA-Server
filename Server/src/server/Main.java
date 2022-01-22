@@ -65,11 +65,9 @@ public class Main {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
-				try {
-					ConnectionManager.shutdown();
-					ConnectionListenerManager.shutdown();
-				} catch (Exception e) {
-				}
+				ConnectionManager.shutdown();
+				ConnectionListenerManager.shutdown();
+				StateManager.shutdown();
 			}
 		});
 		System.out.println("SERVER ONLINE");

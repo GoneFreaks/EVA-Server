@@ -32,8 +32,8 @@ public class ConnectionListener {
 				
 			}
 			
-			//one threads always waits on port
-			//meanwhile others may execute code below or wait
+			//one threads always listens on port x
+			//meanwhile others may execute code below or sleep/wait
 			
 			connection.setSoTimeout(5000);
 			connection.setKeepAlive(true);
@@ -43,7 +43,6 @@ public class ConnectionListener {
 			MessageListenerManager.addClient(id);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	

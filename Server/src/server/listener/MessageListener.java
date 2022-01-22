@@ -5,7 +5,7 @@ import server.util.MessageManager;
 
 public class MessageListener implements Runnable {
 
-	private int id;
+	private final int id;
 	
 	public MessageListener(int id) {
 		this.id = id;

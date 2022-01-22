@@ -3,6 +3,7 @@ package server;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,11 +18,15 @@ public class StateManager {
 	// Every client currently playing and the corresponding lobby
 	private static ConcurrentHashMap<String, Lobby> lobbys = new ConcurrentHashMap<>();
 	
-	// Ever client who has sent a request to another client
+	// Every client who has sent a request to another client
 	private static List<String> requester = new ArrayList<>();
+	
+	// Every client and the corresponding socket
+	private static Map<String, Socket> sockets = new ConcurrentHashMap<>();
 	
 	public static void addUser (String id, Socket client) {
 		connected.put(id, new ArrayList<>());
+		sockets.put(id, client);
 		System.out.println("Neuer User: " + id);
 	}
 	
@@ -108,10 +113,25 @@ public class StateManager {
 		connected.forEach((k,v) -> {
 			v.remove(id);
 		});
+		try {
+			Socket temp;
+			if((temp = sockets.remove(id)) != null) temp.close();
+		} catch (Exception e) {
+		}
 	}
 	
 	public static Set<String> getClients(){
 		return connected.keySet();
+	}
+	
+	public static void shutdown() {
+		sockets.forEach((k,v) -> {
+			try {
+				MessageManager.sendMessage("#del", k);
+				v.close();
+			} catch (Exception e) {
+			}
+		});
 	}
 	
 }
