@@ -94,11 +94,11 @@ public class StateManager {
 	}
 	
 	public static void reset(String id) {
-		delete(id);
+		delete(id, false);
 		connected.put(id, new ArrayList<>());
 	}
 	
-	public static void delete(String id) {
+	public static void delete(String id, boolean closing) {
 		removeFromLobby(id);
 		if(connected.get(id) != null) {
 			connected.get(id).forEach((k) -> {
@@ -113,10 +113,12 @@ public class StateManager {
 		connected.forEach((k,v) -> {
 			v.remove(id);
 		});
-		try {
-			Socket temp;
-			if((temp = sockets.remove(id)) != null) temp.close();
-		} catch (Exception e) {
+		if(closing) {
+			try {
+				Socket temp;
+				if((temp = sockets.remove(id)) != null) temp.close();
+			} catch (Exception e) {
+			}
 		}
 	}
 	
