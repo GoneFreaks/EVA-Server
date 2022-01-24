@@ -29,7 +29,7 @@ public class MessageListenerManager{
 		}
 	}
 
-	public static void addClient(String identifier) {
+	public static synchronized void addClient(String identifier) {
 		int min = Integer.MAX_VALUE;
 		int index = 0;
 		for (int i = 0; i < storage.size(); i++) {
@@ -43,7 +43,7 @@ public class MessageListenerManager{
 		printDebugOutput();
 	}
 	
-	public static void removeClient(String identifier) {
+	public static synchronized void removeClient(String identifier) {
 		storage.forEach((k,v) -> {
 			if(v.remove(identifier)) rebalanceLists(k);
 		});
